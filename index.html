@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Contrato Pro - Gestão Inteligente de Custos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #ff5722;
+            --primary-dark: #e64a19;
+            --primary-light: #fbe9e7;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #2b9348;
+            --warning: #ffb703;
+            --danger: #d90429;
+            --info: #0077b6;
+            --sidebar-width: 260px;
+            --radius: 14px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-light: #94a3b8;
+            --border: #334155;
+            --primary-light: #2d1a15;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); display: flex; min-height: 100vh; overflow-x: hidden; transition: var(--transition); }
+
+        /* SIDEBAR LATERAL */
+        aside {
+            width: var(--sidebar-width); background: var(--card-bg); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 100; transition: var(--transition);
+        }
+        .sidebar-brand {
+            padding: 24px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border);
+        }
+        .sidebar-brand i { font-size: 1.8rem; color: var(--primary); }
+        .sidebar-brand h2 { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+        .sidebar-brand span { font-size: 0.75rem; color: var(--primary); display: block; font-weight: 600; }
+
+        .sidebar-menu { padding: 20px 12px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
+        .menu-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
+            color: var(--text-light); font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: var(--transition);
+            border: none; background: none; width: 100%; text-align: left;
+        }
+        .menu-item:hover, .menu-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+        .menu-item i { font-size: 1.1rem; width: 24px; text-align: center; }
+
+        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+
+        /* CONTEÚDO PRINCIPAL */
+        main {
+            margin-left: var(--sidebar-width); flex: 1; padding: 30px; display: flex; flex-direction: column; gap: 24px; max-width: calc(100vw - var(--sidebar-width));
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: var(--card-bg); padding: 16px 24px; border-radius: var(--radius); border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);
+        }
+        .search-bar {
+            display: flex; align-items: center; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 10px; padding: 8px 14px; width: 320px; gap: 10px;
+        }
+        .search-bar input { border: none; background: none; outline: none; color: var(--text); width: 100%; font-size: 0.9rem; }
+        .search-shortcut { background: var(--border); color: var(--text-light); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+
+        .topbar-actions { display: flex; align-items: center; gap: 14px; }
+        .icon-btn {
+            background: var(--bg); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative;
+        }
+        .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .badge-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; }
+
+        /* PÁGINAS */
+        .page { display: none; flex-direction: column; gap: 24px; animation: fadeIn 0.3s ease; }
+        .page.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* DASHBOARD GRID */
+        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+        .stat-card {
+            background: var(--card-bg); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border);
+            box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden;
+        }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+        .stat-card span { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card h3 { font-size: 1.5rem; font-weight: 700; color: var(--text); }
+        .stat-card small { font-size: 0.8rem; color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+        /* CARDS GERAIS */
+        .card {
+            background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border);
+            box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 16px;
+        }
+        .card-header-flex { display: flex; justify-content: space-between; align-items: center; }
+        .card-header-flex h2 { font-size: 1.15rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media(max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } aside { width: 70px; } aside .sidebar-brand h2, aside .sidebar-brand span, aside .menu-item span { display: none; } main { margin-left: 70px; max-width: calc(100vw - 70px); } }
+
+        /* FORMULÁRIOS & TABELAS */
+        input, select, textarea {
+            width: 100%; padding: 12px 16px; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 10px; color: var(--text); font-size: 0.95rem; outline: none; transition: var(--transition);
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+
+        .btn {
+            background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 10px;
+            font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-secondary { background: var(--border); color: var(--text); }
+        .btn-secondary:hover { background: var(--text-light); color: white; }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        th { font-weight: 600; color: var(--text-light); background: var(--bg); }
+        tr:hover td { background: rgba(0,0,0,0.01); }
+
+        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: inline-block; }
+        .badge.urgente { background: #fee2e2; color: var(--danger); }
+        .badge.atencao { background: #fef3c7; color: #b45309; }
+        .badge.seguro { background: #dcfce7; color: var(--success); }
+
+        /* KANBAN BOARD */
+        .kanban-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; min-height: 400px; }
+        .kanban-col { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .kanban-col h4 { font-size: 0.9rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; display: flex; justify-content: space-between; }
+        .kanban-card { background: var(--card-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; box-shadow: var(--shadow); cursor: grab; font-size: 0.85rem; display: flex; flex-direction: column; gap: 6px; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--card-bg); width: 90%; max-width: 600px; padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 20px; max-height: 90vh; overflow-y: auto; }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside>
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-file-shield"></i>
+            <div>
+                <h2>Easy Contrato</h2>
+                <span>Enterprise v3.0</span>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <button class="menu-item active" onclick="switchPage('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard & KPIs</span></button>
+            <button class="menu-item" onclick="switchPage('contratos', this)"><i class="fa-solid fa-file-contract"></i> <span>Gestão de Contratos</span></button>
+            <button class="menu-item" onclick="switchPage('ia-ocr', this)"><i class="fa-solid fa-brain"></i> <span>IA & Leitura OCR</span></button>
+            <button class="menu-item" onclick="switchPage('fornecedores', this)"><i class="fa-solid fa-store"></i> <span>Fornecedores & Cotações</span></button>
+            <button class="menu-item" onclick="switchPage('kanban', this)"><i class="fa-solid fa-columns"></i> <span>Quadro Kanban</span></button>
+            <button class="menu-item" onclick="switchPage('utilitarios', this)"><i class="fa-solid fa-calculator"></i> <span>Calculadoras & Ferramentas</span></button>
+            <button class="menu-item" onclick="switchPage('relatorios', this)"><i class="fa-solid fa-print"></i> <span>Relatórios & Exportação</span></button>
+        </div>
+        <div class="sidebar-footer">
+            <span style="font-size:0.8rem; color:var(--text-light)">Modo Escuro</span>
+            <button class="icon-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main>
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fa-solid fa-search" style="color:var(--text-light)"></i>
+                <input type="text" id="global-search" placeholder="Buscar contrato ou fornecedor..." onkeyup="globalSearch()">
+                <span class="search-shortcut">Ctrl+K</span>
+            </div>
+            <div class="topbar-actions">
+                <button class="icon-btn" onclick="openNotifs()" title="Notificações">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge-dot"></span>
+                </button>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:36px; height:36px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">EC</div>
+                    <div style="font-size:0.85rem;"><b>Equipe Easy</b><br><small style="color:var(--text-light)">Admin Master</small></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD & KPIS -->
+        <div id="dashboard" class="page active">
+            <div class="dash-grid">
+                <div class="stat-card">
+                    <span>Total de Contratos</span>
+                    <h3 id="stat-total">0</h3>
+                    <small><i class="fa-solid fa-arrow-up"></i> 100% ativos na base</small>
+                </div>
+                <div class="stat-card">
+                    <span>Exposição Financeira</span>
+                    <h3 id="stat-valor">R$ 0,00</h3>
+                    <small style="color:var(--warning)"><i class="fa-solid fa-triangle-exclamation"></i> Orçamento comprometido</small>
+                </div>
+                <div class="stat-card">
+                    <span>Economia Gerada (ROI)</span>
+                    <h3 id="stat-roi" style="color:var(--success)">R$ 18.450,00</h3>
+                    <small><i class="fa-solid fa-check"></i> Renegociações de IA</small>
+                </div>
+                <div class="stat-card">
+                    <span>Índice de Risco Operacional</span>
+                    <h3 id="stat-risco">12 / 100</h3>
+                    <small style="color:var(--success)"><i class="fa-solid fa-shield-halved"></i> Baixo Risco</small>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header-flex">
+                        <h2><i class="fa-solid fa-chart-line" style="color:var(--primary)"></i> Evolução Financeira Mensal</h2>
+                    </div>
+                    <div style="height: 240px; position:relative;">
+                        <canvas id="chartEvolucao"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header-flex">
+                        <h2><i class="fa-solid fa-chart-pie" style="color:var(--primary)"></i> Custos por Categoria</h2>
+                    </div>
+                    <div style="height: 240px; position:relative;">
+                        <canvas id="chartCategorias"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger)"></i> Alertas Críticos (Prazos de 90 Dias)</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>Fornecedor</th><th>Contrato</th><th>Vencimento</th><th>Dias Restantes</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="tabela-alertas">
+                        <!-- Preenchido por JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- GESTÃO DE CONTRATOS -->
+        <div id="contratos" class="page">
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-file-circle-plus" style="color:var(--primary)"></i> Cadastrar Novo Contrato</h2>
+                </div>
+                <div class="form-grid">
+                    <input type="text" id="c-nome" placeholder="Nome do Fornecedor / Empresa *">
+                    <input type="text" id="c-id" placeholder="ID / Número do Contrato *">
+                    <select id="c-categoria">
+                        <option value="Software / TI">Software / Licenciamento TI</option>
+                        <option value="Limpeza & Facilities">Limpeza & Facilities</option>
+                        <option value="Logística & Frota">Logística & Frota</option>
+                        <option value="Serviços Jurídicos">Serviços Jurídicos</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <input type="number" id="c-valor" placeholder="Valor Total Anual/Mensal (R$) *" step="0.01">
+                    <input type="date" id="c-vencimento">
+                    <input type="number" id="c-multa" placeholder="Multa Rescisória (R$)" step="0.01">
+                    <select id="c-renovacao">
+                        <option value="sim">Renovação Automática: Sim</option>
+                        <option value="nao">Renovação Automática: Não</option>
+                    </select>
+                    <input type="text" id="c-responsavel" placeholder="Responsável Interno (Ex: Isis)">
+                </div>
+                <textarea id="c-escopo" placeholder="Escopo ou resumo dos serviços contratados..." rows="2"></textarea>
+                <button class="btn" onclick="adicionarContrato()"><i class="fa-solid fa-save"></i> Salvar e Monitorar Contrato</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-folder-open" style="color:var(--primary)"></i> Contratos Cadastrados</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>Fornecedor</th><th>ID</th><th>Categoria</th><th>Valor</th><th>Vencimento</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody id="tabela-contratos-geral">
+                        <!-- Preenchido por JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- IA & OCR -->
+        <div id="ia-ocr" class="page">
+            <div class="card" style="border-left: 4px solid var(--info);">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-brain" style="color:var(--info)"></i> Simulador de Leitura OCR por Inteligência Artificial</h2>
+                </div>
+                <p style="color:var(--text-light); font-size:0.9rem;">Arraste um PDF de contrato ou clique abaixo para a IA extrair dados automaticamente, detectar cláusulas de risco e prever reajustes pelo IPCA.</p>
+                <div style="border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 10px; cursor: pointer; background: var(--bg);" onclick="simularOCR()">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
+                    <p><b>Clique para simular o upload de um Contrato em PDF</b></p>
+                    <small style="color:var(--text-light)">Formatos aceitos: PDF, DOCX (Até 50MB)</small>
+                </div>
+                <div id="ocr-resultado" style="display:none; margin-top: 15px; padding: 20px; background: var(--bg); border-radius: 10px; border: 1px solid var(--border);">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-circle-check"></i> Dados Extraídos com Sucesso pela IA:</h3>
+                    <div id="ocr-dados-conteudo"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-scale-balanced" style="color:var(--warning)"></i> Comparador de Preços de Mercado & Economia</h2>
+                </div>
+                <p style="font-size:0.9rem; color:var(--text-light);">A IA cruzou seus contratos com bases de mercado e encontrou oportunidades de renegociação imediata:</p>
+                <table>
+                    <thead>
+                        <tr><th>Serviço / Fornecedor Atual</th><th>Custo Atual</th><th>Média de Mercado</th><th>Economia Estimada</th><th>Ação Sugerida</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Cloud AWS Server</b> (TI)</td>
+                            <td>R$ 4.500 /mês</td>
+                            <td>R$ 3.800 /mês</td>
+                            <td><span class="badge seguro">R$ 8.400 /ano</span></td>
+                            <td><button class="btn" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('AWS')">Gerar E-mail de Renegociação</button></td>
+                        </tr>
+                        <tr>
+                            <td><b>Limpeza & Conservação LimpMax</b></td>
+                            <td>R$ 12.000 /mês</td>
+                            <td>R$ 10.500 /mês</td>
+                            <td><span class="badge seguro">R$ 18.000 /ano</span></td>
+                            <td><button class="btn" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('LimpMax')">Gerar E-mail de Renegociação</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- FORNECEDORES & COTAÇÕES -->
+        <div id="fornecedores" class="page">
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-store" style="color:var(--primary)"></i> Central de Fornecedores & Ranking de Desempenho</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>Fornecedor</th><th>CNPJ</th><th>Categoria</th><th>Avaliação Interna</th><th>Contratos Ativos</th></tr>
+                    </thead>
+                    <tbody id="tabela-fornecedores">
+                        <tr><td><b>TechSoft Licenciamentos</b></td><td>45.123.890/0001-12</td><td>Software / TI</td><td>⭐⭐⭐⭐⭐ (5.0)</td><td>2 Contratos</td></tr>
+                        <tr><td><b>LimpMax Serviços Ltda</b></td><td>12.345.678/0001-99</td><td>Limpeza & Facilities</td><td>⭐⭐⭐⭐ (4.0)</td><td>1 Contrato</td></tr>
+                        <tr><td><b>LogiExpress Transportes</b></td><td>98.765.432/0001-44</td><td>Logística & Frota</td><td>⭐⭐⭐ (3.2)</td><td>1 Contrato</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- KANBAN -->
+        <div id="kanban" class="page">
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-columns" style="color:var(--primary)"></i> Quadro Kanban de Renovação e Fluxo</h2>
+                </div>
+                <div class="kanban-board">
+                    <div class="kanban-col">
+                        <h4>A Vencer (90d) <span id="k-count-1">0</span></h4>
+                        <div id="k-col-1"></div>
+                    </div>
+                    <div class="kanban-col">
+                        <h4>Em Cotação <span id="k-count-2">0</span></h4>
+                        <div id="k-col-2"></div>
+                    </div>
+                    <div class="kanban-col">
+                        <h4>Em Negociação <span id="k-count-3">0</span></h4>
+                        <div id="k-col-3"></div>
+                    </div>
+                    <div class="kanban-col">
+                        <h4>Renovado / Resolvido <span id="k-count-4">0</span></h4>
+                        <div id="k-col-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UTILITÁRIOS -->
+        <div id="utilitarios" class="page">
+            <div class="grid-2">
+                <div class="card">
+                    <h2><i class="fa-solid fa-calculator" style="color:var(--primary)"></i> Simulador de Reajuste Inflacionário</h2>
+                    <p style="font-size:0.85rem; color:var(--text-light)">Calcule o impacto do IPCA ou IGP-M no valor do contrato para o próximo ano.</p>
+                    <input type="number" id="calc-valor-base" placeholder="Valor atual do contrato (R$)" step="0.01">
+                    <select id="calc-indice">
+                        <option value="4.5">IPCA (Estimado 4.5%)</option>
+                        <option value="5.2">IGP-M (Estimado 5.2%)</option>
+                    </select>
+                    <button class="btn" onclick="calcularReajuste()">Calcular Novo Valor</button>
+                    <div id="calc-resultado-box" style="font-weight:700; margin-top:10px; color:var(--primary);"></div>
+                </div>
+                <div class="card">
+                    <h2><i class="fa-solid fa-file-arrow-down" style="color:var(--primary)"></i> Modelos de Contratos</h2>
+                    <p style="font-size:0.85rem; color:var(--text-light)">Baixe modelos padrão homologados pela diretoria jurídica.</p>
+                    <button class="btn btn-secondary" onclick="alert('Baixando Modelo de Prestação de Serviços...')"><i class="fa-solid fa-download"></i> Contrato de Prestação de Serviços.docx</button>
+                    <button class="btn btn-secondary" onclick="alert('Baixando Modelo de NDA...')"><i class="fa-solid fa-download"></i> Acordo de Confidencialidade (NDA).docx</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RELATÓRIOS -->
+        <div id="relatorios" class="page">
+            <div class="card">
+                <div class="card-header-flex">
+                    <h2><i class="fa-solid fa-print" style="color:var(--primary)"></i> Central de Relatórios Executivos</h2>
+                </div>
+                <p style="color:var(--text-light); font-size:0.9rem;">Gere relatórios completos para apresentação em reuniões de diretoria.</p>
+                <div style="display:flex; gap:14px;">
+                    <button class="btn" onclick="window.print()"><i class="fa-solid fa-file-pdf"></i> Imprimir / Salvar Relatório Executivo PDF</button>
+                    <button class="btn btn-secondary" onclick="exportarCSV()"><i class="fa-solid fa-file-excel"></i> Exportar Dados para CSV / Excel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL DE NOTIFICAÇÕES -->
+    <div id="modal-notif" class="modal-overlay" onclick="closeNotifs(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2><i class="fa-solid fa-bell" style="color:var(--primary)"></i> Central de Notificações</h2>
+            <div id="lista-notif-modal">
+                <p><b>Alerta Urgente:</b> Contrato AWS Server vence em 14 dias. Ação recomendada: Renegociar agora.</p>
+                <p><b>Aviso:</b> Contrato LimpMax possui renovação automática ativa em 45 dias.</p>
+            </div>
+            <button class="btn" onclick="document.getElementById('modal-notif').classList.remove('active')">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        let db = JSON.parse(localStorage.getItem('easy_contrato_pro_db')) || {
+            contratos: [
+                { nome: "Cloud AWS Server", idContrato: "AWS-2026", categoria: "Software / TI", valor: 54000, vencimento: "2026-05-15", multa: 2000, renovacao: "sim", responsavel: "Isis", escopo: "Hospedagem em nuvem", status: "A Vencer (90d)" },
+                { nome: "LimpMax Serviços", idContrato: "LIMP-089", categoria: "Limpeza & Facilities", valor: 144000, vencimento: "2026-06-01", multa: 5000, renovacao: "sim", responsavel: "Natália", escopo: "Limpeza corporativa", status: "Em Cotação" },
+                { nome: "LogiExpress", idContrato: "LOG-332", categoria: "Logística & Frota", valor: 36000, vencimento: "2026-04-20", multa: 1000, renovacao: "nao", responsavel: "Nicolas", escopo: "Entregas expressas", status: "A Vencer (90d)" }
+            ]
+        };
+
+        let chartEvolucaoObj = null;
+        let chartCategoriasObj = null;
+
+        function switchPage(pageId, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if(btn) btn.classList.add('active');
+            window.scrollTo(0,0);
+            if(pageId === 'dashboard') { renderDashboard(); }
+            if(pageId === 'contratos') { renderContratosTabela(); }
+            if(pageId === 'kanban') { renderKanban(); }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+        }
+
+        function calcularDiasRestantes(dataVencimento) {
+            const hoje = new Date(); hoje.setHours(0,0,0,0);
+            const venc = new Date(dataVencimento + 'T00:00:00');
+            return Math.ceil((venc - hoje) / (1000 * 60 * 60 * 24));
+        }
+
+        function adicionarContrato() {
+            const nome = document.getElementById('c-nome').value.trim();
+            const idContrato = document.getElementById('c-id').value.trim();
+            const categoria = document.getElementById('c-categoria').value;
+            const valor = parseFloat(document.getElementById('c-valor').value);
+            const vencimento = document.getElementById('c-vencimento').value;
+            const multa = parseFloat(document.getElementById('c-multa').value) || 0;
+            const renovacao = document.getElementById('c-renovacao').value;
+            const responsavel = document.getElementById('c-responsavel').value.trim();
+            const escopo = document.getElementById('c-escopo').value.trim();
+
+            if(!nome || !idContrato || isNaN(valor) || !vencimento) {
+                return alert("Preencha os campos obrigatórios (*)");
+            }
+
+            db.contratos.push({ nome, idContrato, categoria, valor, vencimento, multa, renovacao, responsavel, escopo, status: 'A Vencer (90d)' });
+            localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
+
+            alert("Contrato cadastrado com sucesso!");
+            document.getElementById('c-nome').value = '';
+            document.getElementById('c-id').value = '';
+            document.getElementById('c-valor').value = '';
+            document.getElementById('c-vencimento').value = '';
+            document.getElementById('c-multa').value = '';
+            document.getElementById('c-escopo').value = '';
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            let total = db.contratos.length;
+            let valorExp = db.contratos.reduce((acc, c) => acc + c.valor, 0);
+            
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-valor').innerText = `R$ ${valorExp.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+
+            let alertasHTML = '';
+            db.contratos.forEach(c => {
+                const dias = calcularDiasRestantes(c.vencimento);
+                let badgeClass = dias <= 30 ? 'urgente' : (dias <= 60 ? 'atencao' : 'seguro');
+                alertasHTML += `
+                    <tr>
+                        <td><b>${c.nome}</b></td>
+                        <td>${c.idContrato}</td>
+                        <td>${c.vencimento}</td>
+                        <td><b>${dias} dias</b></td>
+                        <td><span class="badge ${badgeClass}">${dias <= 30 ? 'Urgente' : 'Monitorar'}</span></td>
+                    </tr>
+                `;
+            });
+            document.getElementById('tabela-alertas').innerHTML = alertasHTML || '<tr><td colspan="5" style="text-align:center">Nenhum contrato cadastrado.</td></tr>';
+
+            renderCharts();
+        }
+
+        function renderCharts() {
+            const ctx1 = document.getElementById('chartEvolucao').getContext('2d');
+            if(chartEvolucaoObj) chartEvolucaoObj.destroy();
+            chartEvolucaoObj = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                    datasets: [{ label: 'Custos Totais (R$)', data: [120000, 135000, 142000, 150000, 165000, 178000], borderColor: '#ff5722', tension: 0.3, fill: true, backgroundColor: 'rgba(255,87,34,0.05)' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            const ctx2 = document.getElementById('chartCategorias').getContext('2d');
+            if(chartCategoriasObj) chartCategoriasObj.destroy();
+            chartCategoriasObj = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Software / TI', 'Limpeza', 'Logística', 'Outros'],
+                    datasets: [{ data: [54, 30, 16, 10], backgroundColor: ['#ff5722', '#0077b6', '#ffb703', '#2b9348'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function renderContratosTabela() {
+            let html = '';
+            db.contratos.forEach((c, idx) => {
+                html += `
+                    <tr>
+                        <td><b>${c.nome}</b></td>
+                        <td>${c.idContrato}</td>
+                        <td>${c.categoria}</td>
+                        <td>R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td>
+                        <td>${c.vencimento}</td>
+                        <td><button class="btn btn-secondary" style="padding:4px 8px; font-size:0.8rem;" onclick="excluirContrato(${idx})"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                `;
+            });
+            document.getElementById('tabela-contratos-geral').innerHTML = html || '<tr><td colspan="6" style="text-align:center">Nenhum contrato.</td></tr>';
+        }
+
+        function excluirContrato(idx) {
+            if(confirm("Deseja excluir este contrato?")) {
+                db.contratos.splice(idx, 1);
+                localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
+                renderContratosTabela();
+                renderDashboard();
+            }
+        }
+
+        function renderKanban() {
+            ['1', '2', '3', '4'].forEach(id => document.getElementById(`k-col-${id}`).innerHTML = '');
+            db.contratos.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'kanban-card';
+                card.innerHTML = `<b>${c.nome}</b><small>Venc: ${c.vencimento}</small><span style="color:var(--primary); font-weight:600;">R$ ${c.valor.toLocaleString()}</span>`;
+                document.getElementById('k-col-1').appendChild(card);
+            });
+            document.getElementById('k-count-1').innerText = db.contratos.length;
+        }
+
+        function simularOCR() {
+            const box = document.getElementById('ocr-resultado');
+            const conteudo = document.getElementById('ocr-dados-conteudo');
+            box.style.display = 'block';
+            conteudo.innerHTML = `
+                <p><b>Fornecedor Identificado:</b> TechServer Solutions Ltda</p>
+                <p><b>CNPJ:</b> 11.222.333/0001-99</p>
+                <p><b>Valor Mensal:</b> R$ 8.500,00</p>
+                <p><b>Data de Vencimento:</b> 2026-11-30</p>
+                <p style="color:var(--danger)"><b>⚠️ Alerta IA:</b> Cláusula 4.2 aponta reajuste automático acima do IPCA + multa rescisória de 3 meses.</p>
+            `;
+        }
+
+        function gerarScriptRenegociacao(fornecedor) {
+            alert(`E-mail gerado para ${fornecedor}: "Prezados, analisamos nossas faturas e identificamos ofertas de mercado 15% inferiores. Solicitamos revisão de valores para renovação."`);
+        }
+
+        function calcularReajuste() {
+            const base = parseFloat(document.getElementById('calc-valor-base').value) || 0;
+            const taxa = parseFloat(document.getElementById('calc-indice').value);
+            const novo = base * (1 + taxa / 100);
+            document.getElementById('calc-resultado-box').innerText = `Valor estimado após reajuste (${taxa}%): R$ ${novo.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+        }
+
+        function openNotifs() { document.getElementById('modal-notif').classList.add('active'); }
+        function closeNotifs(e) { if(e.target.id === 'modal-notif') document.getElementById('modal-notif').classList.remove('active'); }
+
+        function globalSearch() {
+            const query = document.getElementById('global-search').value.toLowerCase();
+            if(query.length > 2) {
+                switchPage('contratos');
+                document.getElementById('c-nome').value = '';
+            }
+        }
+
+        // Atalho Ctrl+K
+        window.addEventListener('keydown', (e) => {
+            if((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('global-search').focus();
+            }
+        });
+
+        window.onload = renderDashboard;
+    </script>
+</body>
+</html>
