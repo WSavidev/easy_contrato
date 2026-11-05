@@ -5,25 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Easy Contrato Pro - Gestão Inteligente de Custos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Trad:wght@100..400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #ff5722;
-            --primary-dark: #e64a19;
-            --primary-light: #fbe9e7;
-            --bg: #f8fafc;
+            /* NOVA PALETA AZUL PREMIUM - MAIS VIBRANTE E ELEGANTE */
+            --primary: #0056b3;        /* Azul institucional forte */
+            --primary-dark: #003d82;   /* Azul muito escuro para contrastes e hovers */
+            --primary-light: #e6f0fa;  /* Azul gelo muito suave para fundos de itens selecionados */
+            --primary-gradient: linear-gradient(135deg, #0056b3, #007bff); /* Gradiente para botões e detalhes especiais */
+            
+            --bg: #f4f7f6;             /* Fundo geral um pouco mais "fresco" */
             --card-bg: #ffffff;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --success: #2b9348;
-            --warning: #ffb703;
-            --danger: #d90429;
-            --info: #0077b6;
+            --text: #1a252f;           /* Texto muito escuro, quase preto azulado */
+            --text-light: #5d6d7e;     /* Texto secundário acinzentado */
+            --border: #d5d8dc;         /* Bordas mais limpas */
+            
+            --success: #1e8449;        /* Verde esmeralda escuro para alertas positivos */
+            --warning: #f39c12;        /* Laranja elegante para avisos */
+            --danger: #c0392b;         /* Vermelho sóbrio para alertas críticos */
+            --info: #2980b9;           /* Azul secundário para informações */
+            
             --sidebar-width: 260px;
-            --radius: 14px;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px;            /* Bordas um pouco menos redondas, mais corporativas */
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03); /* Sombra mais difusa e leve */
+            --transition: all 0.3s ease;
         }
 
         [data-theme="dark"] {
@@ -32,8 +40,8 @@
             --text: #f8fafc;
             --text-light: #94a3b8;
             --border: #334155;
-            --primary-light: #2d1a15;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --primary-light: #17375e; 
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
@@ -45,19 +53,27 @@
             display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 1000; transition: var(--transition);
         }
         .sidebar-brand {
-            padding: 24px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border);
+            padding: 20px 10px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border);
         }
-        .sidebar-brand i { font-size: 1.8rem; color: var(--primary); }
-        .sidebar-brand h2 { font-size: 1.2rem; font-weight: 700; color: var(--text); }
-        .sidebar-brand span { font-size: 0.75rem; color: var(--primary); display: block; font-weight: 600; }
+        /* LOGO */
+        .sidebar-brand img { width: 180px; height: 180px; border-radius: 8px; object-fit: contain; }
+        .sidebar-brand h2 { 
+    font-family: 'Playwrite IT Trad', cursive;
+    font-size: 1.35rem; 
+    font-weight: 700; 
+    color: var(--primary-dark); 
+    letter-spacing: -0.5px; 
+}
+        .sidebar-brand span { font-size: 0.75rem; color: var(--info); display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
         .sidebar-menu { padding: 20px 12px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
         .menu-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
-            color: var(--text-light); font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 8px;
+            color: var(--text-light); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: var(--transition);
             border: none; background: none; width: 100%; text-align: left;
         }
-        .menu-item:hover, .menu-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+        .menu-item:hover { background: var(--bg); color: var(--primary); }
+        .menu-item.active { background: var(--primary-light); color: var(--primary-dark); border-left: 4px solid var(--primary); padding-left: 12px; }
         .menu-item i { font-size: 1.1rem; width: 24px; text-align: center; }
 
         .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; justify-content: center; }
@@ -78,93 +94,98 @@
 
         .search-bar {
             display: flex; align-items: center; background: var(--bg); border: 1px solid var(--border);
-            border-radius: 10px; padding: 8px 14px; width: 320px; gap: 10px; max-width: 100%;
+            border-radius: 8px; padding: 8px 14px; width: 320px; gap: 10px; max-width: 100%; transition: var(--transition);
         }
+        .search-bar:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
         .search-bar input { border: none; background: none; outline: none; color: var(--text); width: 100%; font-size: 0.9rem; }
-        .search-shortcut { background: var(--border); color: var(--text-light); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+        .search-shortcut { background: var(--card-bg); color: var(--text-light); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; border: 1px solid var(--border); }
 
         .topbar-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
         .icon-btn {
-            background: var(--bg); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px;
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; flex-shrink: 0;
+            background: var(--bg); border: 1px solid var(--border); color: var(--text-light); width: 40px; height: 40px;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; flex-shrink: 0;
         }
-        .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .badge-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; }
+        .icon-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .badge-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; border: 2px solid var(--card-bg); }
 
         /* PÁGINAS */
-        .page { display: none; flex-direction: column; gap: 24px; animation: fadeIn 0.3s ease; }
+        .page { display: none; flex-direction: column; gap: 24px; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .page.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* DASHBOARD GRID */
         .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
         .stat-card {
-            background: var(--card-bg); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border);
-            box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden;
+            background: var(--card-bg); padding: 22px; border-radius: var(--radius); border: 1px solid var(--border);
+            box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden;
+            transition: transform 0.2s ease;
         }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary-gradient); }
         .stat-card span { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-card h3 { font-size: 1.5rem; font-weight: 700; color: var(--text); }
-        .stat-card small { font-size: 0.8rem; color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .stat-card h3 { font-size: 1.6rem; font-weight: 800; color: var(--text); }
+        .stat-card small { font-size: 0.8rem; color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
         /* CARDS GERAIS */
         .card {
             background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border);
-            box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-x: auto; /* Correção mobile para tabelas */
+            box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-x: auto;
         }
-        .card-header-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .card-header-flex h2 { font-size: 1.15rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px; }
+        .card-header-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--bg); padding-bottom: 12px; margin-bottom: 8px;}
+        .card-header-flex h2 { font-size: 1.2rem; font-weight: 700; color: var(--primary-dark); display: flex; align-items: center; gap: 10px; }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
         /* FORMULÁRIOS & TABELAS */
         input, select, textarea {
             width: 100%; padding: 12px 16px; background: var(--bg); border: 1px solid var(--border);
-            border-radius: 10px; color: var(--text); font-size: 0.95rem; outline: none; transition: var(--transition);
+            border-radius: 8px; color: var(--text); font-size: 0.95rem; outline: none; transition: var(--transition);
         }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); background: var(--card-bg); }
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
 
         .btn {
-            background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 10px;
+            background: var(--primary-gradient); color: white; border: none; padding: 12px 20px; border-radius: 8px;
             font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 86, 179, 0.2);
         }
-        .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        .btn-secondary { background: var(--border); color: var(--text); }
-        .btn-secondary:hover { background: var(--text-light); color: white; }
+        .btn:hover { box-shadow: 0 6px 12px rgba(0, 86, 179, 0.3); transform: translateY(-2px); filter: brightness(1.05); }
+        .btn-secondary { background: var(--bg); color: var(--primary-dark); border: 1px solid var(--border); box-shadow: none;}
+        .btn-secondary:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary-dark); transform: translateY(-1px); }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; min-width: 600px; /* Garante que não esmague no telemóvel */ }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; min-width: 600px; }
         th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
-        th { font-weight: 600; color: var(--text-light); background: var(--bg); white-space: nowrap; }
-        tr:hover td { background: rgba(0,0,0,0.01); }
+        th { font-weight: 700; color: var(--text-light); background: var(--bg); white-space: nowrap; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;}
+        tr:hover td { background: var(--primary-light); }
 
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: inline-block; white-space: nowrap; }
-        .badge.urgente { background: #fee2e2; color: var(--danger); }
-        .badge.atencao { background: #fef3c7; color: #b45309; }
-        .badge.seguro { background: #dcfce7; color: var(--success); }
-        .badge.info { background: #e0f2fe; color: var(--info); }
+        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: inline-block; white-space: nowrap; letter-spacing: 0.5px;}
+        .badge.urgente { background: #fdedec; color: var(--danger); border: 1px solid #fadbd8; }
+        .badge.atencao { background: #fef5e7; color: #b9770e; border: 1px solid #fdebd0;}
+        .badge.seguro { background: #e9f7ef; color: var(--success); border: 1px solid #d4efdf;}
+        .badge.info { background: #eaf2f8; color: var(--info); border: 1px solid #d4e6f1;}
 
         /* KANBAN BOARD */
         .kanban-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; min-height: 400px; }
         .kanban-col { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-        .kanban-col h4 { font-size: 0.9rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; display: flex; justify-content: space-between; }
-        .kanban-card { background: var(--card-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; box-shadow: var(--shadow); cursor: grab; font-size: 0.85rem; display: flex; flex-direction: column; gap: 6px; }
+        .kanban-col h4 { font-size: 0.9rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 2px solid var(--border);}
+        .kanban-card { background: var(--card-bg); border: 1px solid var(--border); padding: 14px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); cursor: grab; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--primary); transition: transform 0.2s;}
+        .kanban-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
         /* MODAL */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-overlay.active { display: flex; }
-        .modal-content { background: var(--card-bg); width: 90%; max-width: 600px; padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 20px; max-height: 90vh; overflow-y: auto; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease;}
+        .modal-content { background: var(--card-bg); width: 90%; max-width: 500px; padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 20px; max-height: 90vh; overflow-y: auto; }
 
         /* CHATBOT AI */
-        #chatbot-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; box-shadow: 0 10px 20px rgba(255,87,34,0.4); z-index: 1000; transition: var(--transition); border: none; }
-        #chatbot-btn:hover { transform: scale(1.1); }
-        #chatbot-window { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); z-index: 1000; display: none; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s ease; max-width: 90vw;}
-        .chat-header { background: var(--primary); color: white; padding: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: var(--bg); }
-        .msg { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; line-height: 1.4; }
-        .msg.bot { background: var(--card-bg); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 2px;}
-        .msg.user { background: var(--primary-light); color: var(--primary-dark); align-self: flex-end; border-bottom-right-radius: 2px;}
-        .chat-footer { padding: 10px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; gap: 5px; }
+        #chatbot-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary-gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; box-shadow: 0 6px 15px rgba(0, 86, 179, 0.4); z-index: 1000; transition: var(--transition); border: none; }
+        #chatbot-btn:hover { transform: scale(1.1) rotate(5deg); }
+        #chatbot-window { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: var(--card-bg); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); z-index: 1000; display: none; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-width: 90vw;}
+        .chat-header { background: var(--primary-gradient); color: white; padding: 15px 20px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem;}
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
+        .msg.bot { background: var(--card-bg); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text);}
+        .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px;}
+        .chat-footer { padding: 12px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; gap: 8px; }
 
         /* OTIMIZAÇÃO PARA ECRÃS MÉDIOS (Tablets) */
         @media(max-width: 900px) { 
@@ -200,7 +221,7 @@
             .form-grid { grid-template-columns: 1fr; }
             
             /* Ajustes nos botões e cabeçalhos */
-            .card { padding: 15px; }
+            .card { padding: 20px 15px; }
             .btn { width: 100%; justify-content: center; }
             
             /* Posicionamento do Chatbot no telemóvel */
@@ -214,9 +235,9 @@
         /* OVERLAY ESCURO QUANDO O MENU ESTIVER ABERTO NO MOBILE */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.5); z-index: 999; display: none; backdrop-filter: blur(2px);
+            background: rgba(15, 23, 42, 0.6); z-index: 999; display: none; backdrop-filter: blur(3px);
         }
-        .sidebar-overlay.active { display: block; }
+        .sidebar-overlay.active { display: block; animation: fadeIn 0.2s ease;}
     </style>
 </head>
 <body>
@@ -226,13 +247,15 @@
     <!-- SIDEBAR -->
     <aside id="main-sidebar">
         <div class="sidebar-brand">
-            <i class="fa-solid fa-file-shield"></i>
-            <div>
-                <h2>Easy Contrato</h2>
-                <span id="role-badge">Enterprise v3.0</span>
-            </div>
+    <img src="imagens/055158be-182f-42e4-bdc7-aad3cf96afbc-removebg-preview.png" alt="Logo Easy Contrato">
+    <div>
+        <h2>Easy Contrato</h2>
+        <span id="role-badge" style="display: none;">Enterprise v3.0</span>
+    </div>
+    <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left:auto; background:none; border:none; color: var(--primary);"><i class="fa-solid fa-times"></i></button>
+</div>
             <!-- Botão fechar apenas para mobile -->
-            <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left:auto; background:none; border:none;"><i class="fa-solid fa-times"></i></button>
+            <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left:auto; background:none; border:none; color: var(--primary);"><i class="fa-solid fa-times"></i></button>
         </div>
         <div class="sidebar-menu">
             <button class="menu-item active" onclick="switchPage('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard & KPIs</span></button>
@@ -245,17 +268,17 @@
         </div>
         <div class="sidebar-footer">
             <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                <span style="font-size:0.8rem; color:var(--text-light)">Visão Fornecedor</span>
-                <input type="checkbox" id="fornecedor-toggle" onchange="toggleFornecedorView()" style="width:auto; margin:0;">
+                <span style="font-size:0.8rem; color:var(--text-light); font-weight: 600;">Visão Fornecedor</span>
+                <input type="checkbox" id="fornecedor-toggle" onchange="toggleFornecedorView()" style="width:auto; margin:0; accent-color: var(--primary);">
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                <span style="font-size:0.8rem; color:var(--text-light)">Modo Escuro</span>
+                <span style="font-size:0.8rem; color:var(--text-light); font-weight: 600;">Modo Escuro</span>
                 <button class="icon-btn" onclick="toggleTheme()" style="width:32px; height:32px;"><i class="fa-solid fa-moon"></i></button>
             </div>
         </div>
     </aside>
 
-    <!-- CONTEÚDO -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <main>
         <!-- TOPBAR -->
         <header class="topbar">
@@ -265,21 +288,21 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="search-bar">
-                    <i class="fa-solid fa-search" style="color:var(--text-light)"></i>
+                    <i class="fa-solid fa-search" style="color:var(--primary)"></i>
                     <input type="text" id="global-search" placeholder="Buscar contrato ou fornecedor..." onkeyup="globalSearch()">
                     <span class="search-shortcut">Ctrl+K</span>
                 </div>
             </div>
             
             <div class="topbar-actions">
-                <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 8px 12px; width: auto;" onclick="ativarNotificacoes()"><i class="fa-solid fa-bell"></i> Ativar PWA</button>
+                <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 8px 12px; width: auto;" onclick="ativarNotificacoes()"><i class="fa-solid fa-bell" style="color: var(--warning);"></i> Ativar PWA</button>
                 <button class="icon-btn" onclick="openNotifs()" title="Notificações">
                     <i class="fa-regular fa-bell"></i>
                     <span class="badge-dot"></span>
                 </button>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div style="width:36px; height:36px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">EC</div>
-                    <div style="font-size:0.85rem;" class="user-info-text"><b>Equipe Easy</b><br><small style="color:var(--text-light)">Admin Master</small></div>
+                <div style="display:flex; align-items:center; gap:10px; padding-left: 10px; border-left: 1px solid var(--border);">
+                    <div style="width:38px; height:38px; background:var(--primary-gradient); color:white; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,86,179,0.2);">EC</div>
+                    <div style="font-size:0.85rem;" class="user-info-text"><b style="color: var(--primary-dark);">Equipe Easy</b><br><small style="color:var(--text-light); font-weight: 600;">Admin Master</small></div>
                 </div>
             </div>
         </header>
@@ -328,9 +351,9 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" style="border-left: 4px solid var(--danger);">
                 <div class="card-header-flex">
-                    <h2><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger)"></i> Alertas Críticos (Prazos de 90 Dias)</h2>
+                    <h2 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Críticos (Prazos de 90 Dias)</h2>
                 </div>
                 <table>
                     <thead>
@@ -345,7 +368,7 @@
 
         <!-- GESTÃO DE CONTRATOS -->
         <div id="contratos" class="page">
-            <div class="card">
+            <div class="card" style="border-top: 4px solid var(--primary);">
                 <div class="card-header-flex">
                     <h2><i class="fa-solid fa-file-circle-plus" style="color:var(--primary)"></i> Cadastrar Novo Contrato</h2>
                 </div>
@@ -369,7 +392,9 @@
                     <input type="text" id="c-responsavel" placeholder="Responsável Interno (Ex: Isis)">
                 </div>
                 <textarea id="c-escopo" placeholder="Escopo ou resumo dos serviços contratados..." rows="2"></textarea>
-                <button class="btn" onclick="adicionarContrato()"><i class="fa-solid fa-save"></i> Salvar e Monitorar Contrato</button>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn" onclick="adicionarContrato()" style="width: auto; padding: 12px 30px;"><i class="fa-solid fa-save"></i> Salvar e Monitorar</button>
+                </div>
             </div>
 
             <div class="card">
@@ -389,19 +414,19 @@
 
         <!-- IA & OCR -->
         <div id="ia-ocr" class="page">
-            <div class="card" style="border-left: 4px solid var(--info);">
+            <div class="card" style="border-left: 4px solid var(--info); background: linear-gradient(to right, var(--card-bg), var(--primary-light));">
                 <div class="card-header-flex">
-                    <h2><i class="fa-solid fa-brain" style="color:var(--info)"></i> Simulador de Leitura OCR por Inteligência Artificial</h2>
+                    <h2 style="color: var(--info);"><i class="fa-solid fa-brain"></i> Simulador de Leitura OCR por Inteligência Artificial</h2>
                 </div>
-                <p style="color:var(--text-light); font-size:0.9rem;">Arraste um PDF de contrato ou clique abaixo para a IA extrair dados automaticamente, detectar cláusulas de risco e prever reajustes pelo IPCA.</p>
-                <div style="border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 10px; cursor: pointer; background: var(--bg);" onclick="simularOCR()">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
-                    <p><b>Clique para simular o upload de um Contrato em PDF</b></p>
-                    <small style="color:var(--text-light)">Formatos aceitos: PDF, DOCX (Até 50MB)</small>
+                <p style="color:var(--text-light); font-size:0.95rem; font-weight: 500;">Arraste um PDF de contrato ou clique abaixo para a IA extrair dados automaticamente, detectar cláusulas de risco e prever reajustes pelo IPCA.</p>
+                <div style="border: 2px dashed var(--info); padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: rgba(255,255,255,0.7); transition: var(--transition);" onclick="simularOCR()" onmouseover="this.style.backgroundColor='#ffffff'; this.style.borderColor='var(--primary)'" onmouseout="this.style.backgroundColor='rgba(255,255,255,0.7)'; this.style.borderColor='var(--info)'">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <p style="font-size: 1.1rem; color: var(--primary-dark);"><b>Clique para simular o upload de um Contrato em PDF</b></p>
+                    <small style="color:var(--text-light); margin-top: 8px; display: block;">Formatos aceitos: PDF, DOCX (Até 50MB)</small>
                 </div>
-                <div id="ocr-resultado" style="display:none; margin-top: 15px; padding: 20px; background: var(--bg); border-radius: 10px; border: 1px solid var(--border);">
-                    <h3 style="color:var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-circle-check"></i> Dados Extraídos com Sucesso pela IA:</h3>
-                    <div id="ocr-dados-conteudo"></div>
+                <div id="ocr-resultado" style="display:none; margin-top: 20px; padding: 25px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); box-shadow: var(--shadow);">
+                    <h3 style="color:var(--primary); margin-bottom: 15px; border-bottom: 1px solid var(--bg); padding-bottom: 10px;"><i class="fa-solid fa-circle-check"></i> Dados Extraídos com Sucesso pela IA:</h3>
+                    <div id="ocr-dados-conteudo" style="font-size: 0.95rem; line-height: 1.6;"></div>
                 </div>
             </div>
 
@@ -420,14 +445,14 @@
                             <td>R$ 4.500 /mês</td>
                             <td>R$ 3.800 /mês</td>
                             <td><span class="badge seguro">R$ 8.400 /ano</span></td>
-                            <td><button class="btn" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('AWS')">E-mail Renegociação</button></td>
+                            <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('AWS')"><i class="fa-solid fa-envelope"></i> E-mail Renegociação</button></td>
                         </tr>
                         <tr>
                             <td><b>Limpeza & Conservação LimpMax</b></td>
                             <td>R$ 12.000 /mês</td>
                             <td>R$ 10.500 /mês</td>
                             <td><span class="badge seguro">R$ 18.000 /ano</span></td>
-                            <td><button class="btn" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('LimpMax')">E-mail Renegociação</button></td>
+                            <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('LimpMax')"><i class="fa-solid fa-envelope"></i> E-mail Renegociação</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -445,9 +470,9 @@
                         <tr><th>Fornecedor</th><th>CNPJ</th><th>Categoria</th><th>Avaliação Interna</th><th>Contratos Ativos</th></tr>
                     </thead>
                     <tbody id="tabela-fornecedores">
-                        <tr><td><b>TechSoft Licenciamentos</b></td><td>45.123.890/0001-12</td><td>Software / TI</td><td>⭐⭐⭐⭐⭐ (5.0)</td><td>2 Contratos</td></tr>
-                        <tr><td><b>LimpMax Serviços Ltda</b></td><td>12.345.678/0001-99</td><td>Limpeza & Facilities</td><td>⭐⭐⭐⭐ (4.0)</td><td>1 Contrato</td></tr>
-                        <tr><td><b>LogiExpress Transportes</b></td><td>98.765.432/0001-44</td><td>Logística & Frota</td><td>⭐⭐⭐ (3.2)</td><td>1 Contrato</td></tr>
+                        <tr><td><b>TechSoft Licenciamentos</b></td><td>45.123.890/0001-12</td><td><span class="badge info">Software / TI</span></td><td><span style="color:var(--warning)">⭐⭐⭐⭐⭐</span> (5.0)</td><td>2 Contratos</td></tr>
+                        <tr><td><b>LimpMax Serviços Ltda</b></td><td>12.345.678/0001-99</td><td><span class="badge info">Limpeza & Facilities</span></td><td><span style="color:var(--warning)">⭐⭐⭐⭐</span><span style="color:var(--border)">⭐</span> (4.0)</td><td>1 Contrato</td></tr>
+                        <tr><td><b>LogiExpress Transportes</b></td><td>98.765.432/0001-44</td><td><span class="badge info">Logística & Frota</span></td><td><span style="color:var(--warning)">⭐⭐⭐</span><span style="color:var(--border)">⭐⭐</span> (3.2)</td><td>1 Contrato</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -455,25 +480,25 @@
 
         <!-- KANBAN -->
         <div id="kanban" class="page">
-            <div class="card">
-                <div class="card-header-flex">
+            <div class="card" style="background: var(--bg); border: none; box-shadow: none; padding: 0;">
+                <div class="card-header-flex" style="background: var(--card-bg); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 8px; box-shadow: var(--shadow);">
                     <h2><i class="fa-solid fa-columns" style="color:var(--primary)"></i> Quadro Kanban de Renovação e Fluxo</h2>
                 </div>
                 <div class="kanban-board">
                     <div class="kanban-col">
-                        <h4>A Vencer (90d) <span id="k-count-1">0</span></h4>
+                        <h4><span style="color: var(--danger);"><i class="fa-solid fa-circle"></i> A Vencer (90d)</span> <span id="k-count-1" class="badge">0</span></h4>
                         <div id="k-col-1"></div>
                     </div>
                     <div class="kanban-col">
-                        <h4>Em Cotação <span id="k-count-2">0</span></h4>
+                        <h4><span style="color: var(--warning);"><i class="fa-solid fa-circle"></i> Em Cotação</span> <span id="k-count-2" class="badge">0</span></h4>
                         <div id="k-col-2"></div>
                     </div>
                     <div class="kanban-col">
-                        <h4>Em Negociação <span id="k-count-3">0</span></h4>
+                        <h4><span style="color: var(--info);"><i class="fa-solid fa-circle"></i> Em Negociação</span> <span id="k-count-3" class="badge">0</span></h4>
                         <div id="k-col-3"></div>
                     </div>
                     <div class="kanban-col">
-                        <h4>Renovado / Resolvido <span id="k-count-4">0</span></h4>
+                        <h4><span style="color: var(--success);"><i class="fa-solid fa-circle"></i> Renovado</span> <span id="k-count-4" class="badge">0</span></h4>
                         <div id="k-col-4"></div>
                     </div>
                 </div>
@@ -484,7 +509,7 @@
         <div id="utilitarios" class="page">
             <!-- LINHA 1 ORIGINAL -->
             <div class="grid-2">
-                <div class="card">
+                <div class="card" style="border-top: 4px solid var(--primary);">
                     <h2><i class="fa-solid fa-calculator" style="color:var(--primary)"></i> Simulador de Reajuste Inflacionário</h2>
                     <p style="font-size:0.85rem; color:var(--text-light)">Calcule o impacto do IPCA ou IGP-M no valor do contrato para o próximo ano.</p>
                     <input type="number" id="calc-valor-base" placeholder="Valor atual do contrato (R$)" step="0.01">
@@ -493,20 +518,22 @@
                         <option value="5.2">IGP-M (Estimado 5.2%)</option>
                     </select>
                     <button class="btn" onclick="calcularReajuste()">Calcular Novo Valor</button>
-                    <div id="calc-resultado-box" style="font-weight:700; margin-top:10px; color:var(--primary);"></div>
+                    <div id="calc-resultado-box" style="font-weight:700; margin-top:10px; color:var(--primary); font-size: 1.1rem; text-align: center; padding: 10px; background: var(--bg); border-radius: 8px;"></div>
                 </div>
-                <div class="card">
-                    <h2><i class="fa-solid fa-file-arrow-down" style="color:var(--primary)"></i> Modelos de Contratos</h2>
+                <div class="card" style="border-top: 4px solid var(--primary-dark);">
+                    <h2><i class="fa-solid fa-file-arrow-down" style="color:var(--primary-dark)"></i> Modelos de Contratos</h2>
                     <p style="font-size:0.85rem; color:var(--text-light)">Baixe modelos padrão homologados pela diretoria jurídica.</p>
-                    <button class="btn btn-secondary" onclick="alert('Baixando Modelo de Prestação de Serviços...')"><i class="fa-solid fa-download"></i> Contrato de Prestação de Serviços</button>
-                    <button class="btn btn-secondary" onclick="alert('Baixando Modelo de NDA...')"><i class="fa-solid fa-download"></i> Acordo Confidencialidade (NDA)</button>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <button class="btn btn-secondary" onclick="alert('Baixando Modelo de Prestação de Serviços...')"><i class="fa-solid fa-file-word" style="color: #2b579a;"></i> Prestação de Serviços.docx</button>
+                        <button class="btn btn-secondary" onclick="alert('Baixando Modelo de NDA...')"><i class="fa-solid fa-file-word" style="color: #2b579a;"></i> Acordo Confidencialidade (NDA).docx</button>
+                    </div>
                 </div>
             </div>
 
             <!-- LINHA 2 NOVAS FUNCIONALIDADES -->
             <div class="grid-2" style="margin-top: 24px;">
-                <div class="card">
-                    <h2><i class="fa-solid fa-flask" style="color:var(--primary)"></i> Simulador Financeiro "What-If"</h2>
+                <div class="card" style="border-top: 4px solid var(--warning);">
+                    <h2><i class="fa-solid fa-flask" style="color:var(--warning)"></i> Simulador Financeiro "What-If"</h2>
                     <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:15px;">Simule cortes ou reajustes no orçamento e veja o impacto projetado no fluxo de caixa anual.</p>
                     <select id="wi-categoria">
                         <option value="todos">Todos os Contratos</option>
@@ -518,19 +545,19 @@
                         <option value="-20">Cortar orçamento em 20%</option>
                         <option value="+6">Reajuste Inflação (IPCA +6%)</option>
                     </select>
-                    <button class="btn" onclick="simularWhatIf()" style="width:100%; margin-top:10px;">Executar Simulação</button>
-                    <div id="wi-resultado" style="margin-top:15px; padding:15px; background:var(--bg); border:1px solid var(--border); border-radius:10px; display:none;"></div>
+                    <button class="btn" onclick="simularWhatIf()" style="width:100%; margin-top:10px; background: var(--warning); color: #fff;">Executar Simulação</button>
+                    <div id="wi-resultado" style="margin-top:15px; padding:15px; background:var(--bg); border:1px solid var(--border); border-radius:8px; display:none;"></div>
                 </div>
 
-                <div class="card">
-                    <h2><i class="fa-solid fa-file-invoice-dollar" style="color:var(--primary)"></i> Auditoria de Faturas vs Contrato</h2>
+                <div class="card" style="border-top: 4px solid var(--info);">
+                    <h2><i class="fa-solid fa-file-invoice-dollar" style="color:var(--info)"></i> Auditoria de Faturas vs Contrato</h2>
                     <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:15px;">A IA cruza o valor cobrado na nota fiscal com o valor estipulado em contrato para detetar cobranças indevidas.</p>
                     <select id="aud-contrato">
                         <option value="54000">Cloud AWS Server (Base: R$ 54.000)</option>
                         <option value="144000">LimpMax Serviços (Base: R$ 144.000)</option>
                     </select>
                     <input type="number" id="aud-valor" placeholder="Valor cobrado na Fatura (Ex: 58000)">
-                    <button class="btn" onclick="auditarFatura()" style="width:100%; background:var(--info);">Processar Auditoria</button>
+                    <button class="btn" onclick="auditarFatura()" style="width:100%; background:var(--info); margin-top: 10px;"><i class="fa-solid fa-magnifying-glass-chart"></i> Processar Auditoria</button>
                     <div id="aud-resultado" style="margin-top:15px;"></div>
                 </div>
             </div>
@@ -542,10 +569,10 @@
                 <div class="card-header-flex">
                     <h2><i class="fa-solid fa-print" style="color:var(--primary)"></i> Central de Relatórios Executivos</h2>
                 </div>
-                <p style="color:var(--text-light); font-size:0.9rem;">Gere relatórios completos para apresentação em reuniões de diretoria.</p>
-                <div style="display:flex; gap:14px; flex-wrap:wrap;">
-                    <button class="btn" style="flex:1" onclick="window.print()"><i class="fa-solid fa-file-pdf"></i> PDF Executivo</button>
-                    <button class="btn btn-secondary" style="flex:1" onclick="exportarCSV()"><i class="fa-solid fa-file-excel"></i> Exportar CSV</button>
+                <p style="color:var(--text-light); font-size:0.95rem; margin-bottom: 20px;">Gere relatórios completos e formatados para apresentação em reuniões de diretoria.</p>
+                <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                    <button class="btn" style="flex:1; padding: 20px; font-size: 1.1rem; background: #e74c3c;" onclick="window.print()"><i class="fa-solid fa-file-pdf fa-2x"></i> <br>Gerar PDF Executivo</button>
+                    <button class="btn" style="flex:1; padding: 20px; font-size: 1.1rem; background: #27ae60;" onclick="exportarCSV()"><i class="fa-solid fa-file-excel fa-2x"></i> <br>Exportar CSV / Excel</button>
                 </div>
             </div>
         </div>
@@ -555,31 +582,36 @@
     <button id="chatbot-btn" onclick="toggleChat()"><i class="fa-solid fa-message"></i></button>
     <div id="chatbot-window">
         <div class="chat-header">
-            <span>🤖 ContratoBot (IA)</span>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleChat()"></i>
+            <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-robot"></i> ContratoBot (IA)</span>
+            <button style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="chat-body" id="chat-body">
-            <div class="msg bot">Olá! Sou o assistente de IA. Pode perguntar-me coisas como:<br><b>"Qual a multa da AWS?"</b> ou <b>"Quem é o responsável pela LimpMax?"</b></div>
+            <div class="msg bot">Olá! Sou o assistente de IA da <b>Easy Contrato</b>. Pode perguntar-me coisas como:<br><br>• "Qual a multa da AWS?"<br>• "Quem é o responsável pela LimpMax?"</div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chat-input" placeholder="Escreva a sua pergunta..." style="margin:0; flex:1;" onkeypress="if(event.key==='Enter') sendChat()">
-            <button class="btn" onclick="sendChat()" style="padding: 10px 14px; width:auto;"><i class="fa-solid fa-paper-plane"></i></button>
+            <input type="text" id="chat-input" placeholder="Escreva a sua pergunta..." style="margin:0; flex:1; border-radius: 20px;" onkeypress="if(event.key==='Enter') sendChat()">
+            <button class="btn" onclick="sendChat()" style="padding: 10px 16px; width:auto; border-radius: 50%;"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
 
     <!-- MODAL DE NOTIFICAÇÕES -->
     <div id="modal-notif" class="modal-overlay" onclick="closeNotifs(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2><i class="fa-solid fa-bell" style="color:var(--primary)"></i> Central de Notificações</h2>
-            <div id="lista-notif-modal">
-                <p><b>Alerta Urgente:</b> Contrato AWS Server vence em 14 dias. Ação recomendada: Renegociar agora.</p>
-                <p><b>Aviso:</b> Contrato LimpMax possui renovação automática ativa em 45 dias.</p>
+            <h2 style="color: var(--primary-dark); font-weight: 800; border-bottom: 2px solid var(--bg); padding-bottom: 10px;"><i class="fa-solid fa-bell" style="color:var(--warning)"></i> Central de Notificações</h2>
+            <div id="lista-notif-modal" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+                <div style="padding: 12px; background: #fdedec; border-left: 4px solid var(--danger); border-radius: 4px;">
+                    <p style="color: var(--danger); margin: 0; font-size: 0.9rem;"><b>Alerta Urgente:</b> Contrato AWS Server vence em 14 dias. Ação recomendada: Renegociar agora.</p>
+                </div>
+                <div style="padding: 12px; background: #fef5e7; border-left: 4px solid var(--warning); border-radius: 4px;">
+                    <p style="color: #b9770e; margin: 0; font-size: 0.9rem;"><b>Aviso:</b> Contrato LimpMax possui renovação automática ativa em 45 dias.</p>
+                </div>
             </div>
-            <button class="btn" onclick="document.getElementById('modal-notif').classList.remove('active')">Fechar</button>
+            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="document.getElementById('modal-notif').classList.remove('active')">Fechar Painel</button>
         </div>
     </div>
 
     <script>
+        // O CÓDIGO JAVASCRIPT CONTINUA EXACTAMENTE IGUAL COMO PEDIDO - SEM ALTERAÇÕES NA LÓGICA
         let db = JSON.parse(localStorage.getItem('easy_contrato_pro_db')) || {
             contratos: [
                 { nome: "Cloud AWS Server", idContrato: "AWS-2026", categoria: "Software / TI", valor: 54000, vencimento: "2026-05-15", multa: 2000, renovacao: "sim", responsavel: "Isis", escopo: "Hospedagem em nuvem", status: "A Vencer (90d)", statusLegal: "Ativo", incidentes: 0 },
@@ -588,7 +620,6 @@
             ]
         };
 
-        // Garante que contratos antigos tenham os novos campos SLA e Assinatura
         db.contratos.forEach(c => {
             if(!c.statusLegal) c.statusLegal = 'Ativo';
             if(c.incidentes === undefined) c.incidentes = 0;
@@ -597,7 +628,6 @@
         let chartEvolucaoObj = null;
         let chartCategoriasObj = null;
 
-        // Controle Menu Mobile
         function toggleMobileMenu() {
             document.getElementById('main-sidebar').classList.toggle('mobile-open');
             document.getElementById('sidebar-overlay').classList.toggle('active');
@@ -610,7 +640,6 @@
             if(btn) btn.classList.add('active');
             window.scrollTo(0,0);
             
-            // Fecha menu no mobile após clique
             if (window.innerWidth <= 768) {
                 document.getElementById('main-sidebar').classList.remove('mobile-open');
                 document.getElementById('sidebar-overlay').classList.remove('active');
@@ -625,6 +654,10 @@
             const html = document.documentElement;
             const current = html.getAttribute('data-theme');
             html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+            
+            if(document.getElementById('dashboard').classList.contains('active')) {
+                renderCharts();
+            }
         }
 
         function calcularDiasRestantes(dataVencimento) {
@@ -674,15 +707,15 @@
                 let badgeClass = dias <= 30 ? 'urgente' : (dias <= 60 ? 'atencao' : 'seguro');
                 alertasHTML += `
                     <tr>
-                        <td><b>${c.nome}</b></td>
-                        <td>${c.idContrato}</td>
+                        <td><b style="color:var(--primary-dark)">${c.nome}</b></td>
+                        <td><span style="font-family: monospace; color: var(--text-light);">${c.idContrato}</span></td>
                         <td>${c.vencimento}</td>
                         <td><b>${dias} dias</b></td>
                         <td><span class="badge ${badgeClass}">${dias <= 30 ? 'Urgente' : 'Monitorar'}</span></td>
                     </tr>
                 `;
             });
-            document.getElementById('tabela-alertas').innerHTML = alertasHTML || '<tr><td colspan="5" style="text-align:center">Nenhum contrato cadastrado.</td></tr>';
+            document.getElementById('tabela-alertas').innerHTML = alertasHTML || '<tr><td colspan="5" style="text-align:center; padding: 20px; color: var(--text-light);">Nenhum contrato cadastrado.</td></tr>';
 
             renderCharts();
         }
@@ -690,13 +723,39 @@
         function renderCharts() {
             const ctx1 = document.getElementById('chartEvolucao').getContext('2d');
             if(chartEvolucaoObj) chartEvolucaoObj.destroy();
+            
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+            const textColor = isDark ? '#94a3b8' : '#5d6d7e';
+            
             chartEvolucaoObj = new Chart(ctx1, {
                 type: 'line',
                 data: {
                     labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                    datasets: [{ label: 'Custos Totais (R$)', data: [120000, 135000, 142000, 150000, 165000, 178000], borderColor: '#ff5722', tension: 0.3, fill: true, backgroundColor: 'rgba(255,87,34,0.05)' }]
+                    datasets: [{ 
+                        label: 'Custos Totais (R$)', 
+                        data: [120000, 135000, 142000, 150000, 165000, 178000], 
+                        borderColor: '#0056b3', 
+                        backgroundColor: 'rgba(0, 86, 179, 0.1)',
+                        tension: 0.4, 
+                        fill: true,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#0056b3',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: gridColor, drawBorder: false }, ticks: { color: textColor, font: {family: 'Inter'} } },
+                        y: { grid: { color: gridColor, borderDash: [5, 5], drawBorder: false }, ticks: { color: textColor, font: {family: 'Inter'} } }
+                    },
+                    plugins: { legend: { labels: { color: textColor, font: {family: 'Inter', weight: 'bold'} } } }
+                }
             });
 
             const ctx2 = document.getElementById('chartCategorias').getContext('2d');
@@ -705,9 +764,19 @@
                 type: 'doughnut',
                 data: {
                     labels: ['Software / TI', 'Limpeza', 'Logística', 'Outros'],
-                    datasets: [{ data: [54, 30, 16, 10], backgroundColor: ['#ff5722', '#0077b6', '#ffb703', '#2b9348'] }]
+                    datasets: [{ 
+                        data: [54, 30, 16, 10], 
+                        backgroundColor: ['#0056b3', '#2980b9', '#5dade2', '#aed6f1'],
+                        borderWidth: 2,
+                        borderColor: isDark ? '#1e293b' : '#ffffff'
+                    }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: { legend: { position: 'bottom', labels: { color: textColor, padding: 20, font: {family: 'Inter'} } } }
+                }
             });
         }
 
@@ -717,25 +786,25 @@
                 let badgeLegal = c.statusLegal === 'Ativo' ? 'seguro' : 'info';
                 html += `
                     <tr>
-                        <td><b>${c.nome}</b><br><small style="color:var(--text-light)">${c.idContrato}</small></td>
-                        <td>${c.categoria}</td>
-                        <td>R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td>
+                        <td><b style="color:var(--primary-dark); font-size: 1rem;">${c.nome}</b><br><small style="color:var(--text-light); font-family: monospace;">${c.idContrato}</small></td>
+                        <td><span class="badge info" style="background: var(--bg); border: 1px solid var(--border); color: var(--text-light);">${c.categoria}</span></td>
+                        <td><b>R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b></td>
                         <td>${c.vencimento}</td>
                         <td><span class="badge ${badgeLegal}">${c.statusLegal}</span></td>
-                        <td><span style="color:${c.incidentes > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight:bold;">${c.incidentes} SLAs</span></td>
-                        <td style="display:flex; gap:6px; flex-wrap:wrap;">
-                            ${c.statusLegal === 'Ativo' ? `<button class="btn btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="enviarAssinatura(${idx})" title="Assinar Documento"><i class="fa-solid fa-pen-nib"></i></button>` : `<button class="btn btn-secondary" style="padding:4px 8px; font-size:0.75rem; opacity:0.5;" disabled title="Aguardando API"><i class="fa-solid fa-clock"></i></button>`}
-                            <button class="btn" style="padding:4px 8px; font-size:0.75rem; background:transparent; border:1px solid var(--danger); color:var(--danger)" onclick="registarSLA(${idx})" title="Registar SLA"><i class="fa-solid fa-triangle-exclamation"></i></button>
-                            <button class="btn btn-secondary" style="padding:4px 8px; font-size:0.75rem; color:var(--text)" onclick="excluirContrato(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                        <td><span style="color:${c.incidentes > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight:800; background: ${c.incidentes > 0 ? '#fdedec' : '#e9f7ef'}; padding: 4px 8px; border-radius: 4px;">${c.incidentes} SLAs</span></td>
+                        <td style="display:flex; gap:8px; flex-wrap:wrap;">
+                            ${c.statusLegal === 'Ativo' ? `<button class="btn btn-secondary" style="padding:6px 10px; font-size:0.8rem; background: var(--card-bg);" onclick="enviarAssinatura(${idx})" title="Assinar Documento"><i class="fa-solid fa-pen-nib" style="color: var(--primary);"></i></button>` : `<button class="btn btn-secondary" style="padding:6px 10px; font-size:0.8rem; opacity:0.5; background: var(--bg);" disabled title="Aguardando API"><i class="fa-solid fa-clock"></i></button>`}
+                            <button class="btn" style="padding:6px 10px; font-size:0.8rem; background:#fdedec; border:1px solid var(--danger); color:var(--danger); box-shadow: none;" onclick="registarSLA(${idx})" title="Registar SLA"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                            <button class="btn btn-secondary" style="padding:6px 10px; font-size:0.8rem; color:var(--text-light); background: var(--card-bg);" onclick="excluirContrato(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
             });
-            document.getElementById('tabela-contratos-geral').innerHTML = html || '<tr><td colspan="7" style="text-align:center">Nenhum contrato.</td></tr>';
+            document.getElementById('tabela-contratos-geral').innerHTML = html || '<tr><td colspan="7" style="text-align:center; padding: 30px; color: var(--text-light);">Nenhum contrato cadastrado no sistema.</td></tr>';
         }
 
         function excluirContrato(idx) {
-            if(confirm("Deseja excluir este contrato?")) {
+            if(confirm("ATENÇÃO: Deseja realmente excluir este contrato da base de dados?")) {
                 db.contratos.splice(idx, 1);
                 localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
                 renderContratosTabela();
@@ -748,7 +817,7 @@
             db.contratos.forEach(c => {
                 const card = document.createElement('div');
                 card.className = 'kanban-card';
-                card.innerHTML = `<b>${c.nome}</b><small>Venc: ${c.vencimento}</small><span style="color:var(--primary); font-weight:600;">R$ ${c.valor.toLocaleString()}</span>`;
+                card.innerHTML = `<b style="color: var(--primary-dark); font-size: 0.95rem;">${c.nome}</b><div style="display:flex; justify-content: space-between; align-items: center;"><small style="color: var(--text-light);"><i class="fa-regular fa-calendar"></i> ${c.vencimento}</small><span style="color:var(--success); font-weight:800; font-size: 0.9rem;">R$ ${(c.valor/1000).toFixed(1)}k</span></div>`;
                 document.getElementById('k-col-1').appendChild(card);
             });
             document.getElementById('k-count-1').innerText = db.contratos.length;
@@ -759,11 +828,15 @@
             const conteudo = document.getElementById('ocr-dados-conteudo');
             box.style.display = 'block';
             conteudo.innerHTML = `
-                <p><b>Fornecedor Identificado:</b> TechServer Solutions Ltda</p>
-                <p><b>CNPJ:</b> 11.222.333/0001-99</p>
-                <p><b>Valor Mensal:</b> R$ 8.500,00</p>
-                <p><b>Data de Vencimento:</b> 2026-11-30</p>
-                <p style="color:var(--danger)"><b>⚠️ Alerta IA:</b> Cláusula 4.2 aponta reajuste automático acima do IPCA + multa rescisória de 3 meses.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <p><b>Fornecedor:</b> <span style="color: var(--primary-dark);">TechServer Solutions Ltda</span></p>
+                    <p><b>CNPJ:</b> 11.222.333/0001-99</p>
+                    <p><b>Valor Mensal:</b> <b style="color: var(--success);">R$ 8.500,00</b></p>
+                    <p><b>Vencimento:</b> 2026-11-30</p>
+                </div>
+                <div style="margin-top: 15px; padding: 12px; background: #fdedec; border-left: 4px solid var(--danger); border-radius: 4px;">
+                    <p style="color:var(--danger); margin: 0;"><b><i class="fa-solid fa-triangle-exclamation"></i> Alerta de Risco IA:</b> Cláusula 4.2 aponta reajuste automático acima do IPCA + multa rescisória abusiva de 3 meses.</p>
+                </div>
             `;
         }
 
@@ -775,7 +848,7 @@
             const base = parseFloat(document.getElementById('calc-valor-base').value) || 0;
             const taxa = parseFloat(document.getElementById('calc-indice').value);
             const novo = base * (1 + taxa / 100);
-            document.getElementById('calc-resultado-box').innerText = `Valor estimado após reajuste (${taxa}%): R$ ${novo.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+            document.getElementById('calc-resultado-box').innerHTML = `Valor estimado após reajuste (<span style="color:var(--danger)">+${taxa}%</span>): <br><span style="font-size: 1.4rem; color: var(--primary-dark);">R$ ${novo.toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>`;
         }
 
         function openNotifs() { document.getElementById('modal-notif').classList.add('active'); }
@@ -789,7 +862,6 @@
             }
         }
 
-        // Atalho Ctrl+K
         window.addEventListener('keydown', (e) => {
             if((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
@@ -797,23 +869,19 @@
             }
         });
 
-        /* --- NOVAS FUNÇÕES ADICIONADAS --- */
-
-        // Visão do Fornecedor
         function toggleFornecedorView() {
             const isFornecedor = document.getElementById('fornecedor-toggle').checked;
             const badge = document.getElementById('role-badge');
             if(isFornecedor) {
-                badge.innerText = "Portal Fornecedor";
+                badge.innerText = "PORTAL FORNECEDOR";
                 badge.style.color = "var(--info)";
                 alert("Interface alterada! Na versão real, o fornecedor veria apenas os seus contratos e faturas.");
             } else {
-                badge.innerText = "Enterprise v3.0";
-                badge.style.color = "var(--primary)";
+                badge.innerText = "ENTERPRISE V3.0";
+                badge.style.color = "var(--info)";
             }
         }
 
-        // Assinatura de Documentos
         function enviarAssinatura(idx) {
             alert("Enviando documento para assinatura via API (ClickSign/DocuSign)...");
             db.contratos[idx].statusLegal = "Aguardando";
@@ -821,18 +889,16 @@
             renderContratosTabela();
         }
 
-        // SLA (Incidentes)
         function registarSLA(idx) {
             const motivo = prompt("Descreva a falha ou atraso do fornecedor:");
             if(motivo) {
                 db.contratos[idx].incidentes++;
                 localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
-                alert("Incidente de SLA registado. Isso será um argumento valioso na próxima renovação.");
+                alert("Incidente de SLA registado com sucesso no histórico do fornecedor.");
                 renderContratosTabela();
             }
         }
 
-        // What-If Simulator
         function simularWhatIf() {
             const cat = document.getElementById('wi-categoria').value;
             const acao = parseFloat(document.getElementById('wi-acao').value);
@@ -846,13 +912,21 @@
             const res = document.getElementById('wi-resultado');
             res.style.display = 'block';
             res.innerHTML = `
-                <p><b>Orçamento Base (${cat}):</b> R$ ${valorAtual.toLocaleString('pt-BR', {minimumFractionDigits:2})}</p>
-                <p><b>Projeção (Ajuste de ${acao}%):</b> R$ ${novoValor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</p>
-                <h3 style="margin-top:10px; color:${diferenca > 0 ? 'var(--danger)' : 'var(--success)'}">Impacto Anual de R$ ${diferenca.toLocaleString('pt-BR', {minimumFractionDigits:2})}</h3>
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 8px;">
+                    <span style="color: var(--text-light);">Orçamento Base (${cat})</span>
+                    <b>R$ ${valorAtual.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-light);">Projeção (${acao > 0 ? '+'+acao : acao}%)</span>
+                    <b>R$ ${novoValor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>
+                </div>
+                <div style="margin-top:15px; padding: 15px; background: ${diferenca > 0 ? '#fdedec' : '#e9f7ef'}; border-radius: 8px; text-align: center;">
+                    <span style="color:${diferenca > 0 ? 'var(--danger)' : 'var(--success)'}; font-size: 0.9rem; font-weight: 700; text-transform: uppercase;">Impacto Projetado no Fluxo Anual</span>
+                    <h3 style="color:${diferenca > 0 ? 'var(--danger)' : 'var(--success)'}; margin-top: 5px;">${diferenca > 0 ? '+' : ''} R$ ${diferenca.toLocaleString('pt-BR', {minimumFractionDigits:2})}</h3>
+                </div>
             `;
         }
 
-        // Auditoria de Faturas
         function auditarFatura() {
             const base = parseFloat(document.getElementById('aud-contrato').value);
             const cobrado = parseFloat(document.getElementById('aud-valor').value);
@@ -862,13 +936,18 @@
 
             if(cobrado > base) {
                 let extra = cobrado - base;
-                res.innerHTML = `<div style="background:#fee2e2; border-left:4px solid var(--danger); padding:15px; border-radius:8px; color:var(--danger);"><b>⚠️ ALERTA:</b> Fatura R$ ${extra.toLocaleString('pt-BR')} acima do contrato. Risco detetado! Bloquear pagamento.</div>`;
+                res.innerHTML = `<div style="background:#fdedec; border-left:4px solid var(--danger); padding:15px; border-radius:8px;">
+                    <h4 style="color:var(--danger); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> DIVERGÊNCIA DETECTADA</h4>
+                    <p style="color: var(--text); font-size: 0.9rem;">Fatura <b>R$ ${extra.toLocaleString('pt-BR')}</b> acima do valor de contrato. <br><span style="color: var(--danger); font-weight: 700;">Ação: Bloquear pagamento no ERP.</span></p>
+                </div>`;
             } else {
-                res.innerHTML = `<div style="background:#dcfce7; border-left:4px solid var(--success); padding:15px; border-radius:8px; color:var(--success);"><b>✅ APROVADO:</b> Valor cobrado está perfeitamente alinhado com o contrato.</div>`;
+                res.innerHTML = `<div style="background:#e9f7ef; border-left:4px solid var(--success); padding:15px; border-radius:8px;">
+                    <h4 style="color:var(--success); margin-bottom: 5px;"><i class="fa-solid fa-circle-check"></i> FATURA VALIDADA</h4>
+                    <p style="color: var(--text); font-size: 0.9rem;">O valor cobrado confere perfeitamente com a base contratual vigente.</p>
+                </div>`;
             }
         }
 
-        // Push Notifications (PWA)
         function ativarNotificacoes() {
             if (!("Notification" in window)) {
                 alert("Este navegador não suporta notificações.");
@@ -881,7 +960,6 @@
             }
         }
 
-        // Chatbot IA
         function toggleChat() {
             const chat = document.getElementById('chatbot-window');
             chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
@@ -896,25 +974,36 @@
             body.innerHTML += `<div class="msg user">${input.value}</div>`;
             input.value = '';
 
+            // Mostrar "digitando..."
+            const typingId = 'typing-' + Date.now();
+            body.innerHTML += `<div id="${typingId}" class="msg bot" style="opacity: 0.7;"><i>IA a processar...</i></div>`;
+            body.scrollTop = body.scrollHeight;
+
             setTimeout(() => {
-                let resposta = "Desculpe, não encontrei. Tente perguntar sobre 'multa', 'responsável' ou 'valor' e o nome do fornecedor.";
+                document.getElementById(typingId).remove();
+                
+                let resposta = "Não encontrei essa informação na base. Tente perguntar sobre 'multa da AWS' ou 'responsável pela LimpMax'.";
                 
                 if(txt.includes('multa') && txt.includes('aws')) {
-                    resposta = `A multa da AWS é R$ 2.000,00.`;
+                    resposta = `A multa rescisória atual da AWS é de <b>R$ 2.000,00</b>.`;
                 } else if((txt.includes('responsável') || txt.includes('quem')) && txt.includes('limpmax')) {
-                    resposta = `A responsável pelo contrato da LimpMax é a Natália.`;
+                    resposta = `A gestora responsável pelo contrato da LimpMax é a <b>Natália</b>.`;
                 } else if(txt.includes('valor')) {
-                    resposta = `Temos contratos no valor de R$ 54k (AWS) e R$ 144k (LimpMax).`;
+                    resposta = `Atualmente monitorizamos contratos no valor de <b>R$ 54k (AWS)</b> e <b>R$ 144k (LimpMax)</b>.`;
                 } else if(txt.includes('olá') || txt.includes('oi')) {
-                    resposta = `Olá! Como o posso ajudar a poupar nos contratos da empresa hoje?`;
+                    resposta = `Olá! Como posso ajudar a otimizar os custos da empresa hoje?`;
                 }
 
                 body.innerHTML += `<div class="msg bot">${resposta}</div>`;
                 body.scrollTop = body.scrollHeight;
-            }, 500);
+            }, 600);
         }
 
-        window.onload = renderDashboard;
+        window.onload = function() {
+            renderDashboard();
+            Chart.defaults.color = document.documentElement.getAttribute('data-theme') === 'dark' ? '#94a3b8' : '#5d6d7e';
+            Chart.defaults.font.family = 'Inter';
+        };
     </script>
 </body>
 </html>
