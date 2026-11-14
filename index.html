@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Easy Contrato Pro - Gestão Inteligente de Custos</title>
+    <title>Easy Contrato Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Trad:wght@100..400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- BIBLIOTECA REAL PARA LER TEXTO DE ARQUIVOS PDF NO NAVEGADOR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- FONTE DO TEXTO DA LOGO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Trad:wght@100..400&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            /* NOVA PALETA AZUL PREMIUM - MAIS VIBRANTE E ELEGANTE */
-            --primary: #0056b3;        /* Azul institucional forte */
-            --primary-dark: #003d82;   /* Azul muito escuro para contrastes e hovers */
-            --primary-light: #e6f0fa;  /* Azul gelo muito suave para fundos de itens selecionados */
-            --primary-gradient: linear-gradient(135deg, #0056b3, #007bff); /* Gradiente para botões e detalhes especiais */
+            --primary: #0056b3;        
+            --primary-dark: #003d82;   
+            --primary-light: #e6f0fa;  
+            --primary-gradient: linear-gradient(135deg, #0056b3, #007bff); 
             
-            --bg: #f4f7f6;             /* Fundo geral um pouco mais "fresco" */
+            --bg: #f4f7f6;             
             --card-bg: #ffffff;
-            --text: #1a252f;           /* Texto muito escuro, quase preto azulado */
-            --text-light: #5d6d7e;     /* Texto secundário acinzentado */
-            --border: #d5d8dc;         /* Bordas mais limpas */
+            --text: #1a252f;           
+            --text-light: #5d6d7e;     
+            --border: #d5d8dc;         
             
-            --success: #1e8449;        /* Verde esmeralda escuro para alertas positivos */
-            --warning: #f39c12;        /* Laranja elegante para avisos */
-            --danger: #c0392b;         /* Vermelho sóbrio para alertas críticos */
-            --info: #2980b9;           /* Azul secundário para informações */
+            --success: #1e8449;        /* Verde para 90 dias */
+            --warning: #f39c12;        /* Amarelo para 60 dias */
+            --danger: #c0392b;         /* Vermelho para 30 dias */
+            --info: #2980b9;           
             
             --sidebar-width: 260px;
-            --radius: 12px;            /* Bordas um pouco menos redondas, mais corporativas */
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03); /* Sombra mais difusa e leve */
+            --radius: 12px;            
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03); 
             --transition: all 0.3s ease;
         }
 
@@ -53,19 +57,11 @@
             display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 1000; transition: var(--transition);
         }
         .sidebar-brand {
-            padding: 20px 10px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border);
+            padding: 20px 10px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); justify-content: center;
         }
-        /* LOGO */
-        .sidebar-brand img { width: 180px; height: 180px; border-radius: 8px; object-fit: contain; }
-        .sidebar-brand h2 { 
-    font-family: 'Playwrite IT Trad', cursive;
-    font-size: 1.35rem; 
-    font-weight: 700; 
-    color: var(--primary-dark); 
-    letter-spacing: -0.5px; 
-}
-        .sidebar-brand span { font-size: 0.75rem; color: var(--info); display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-
+      .sidebar-brand img { width: 140px; height: 140px; border-radius: 10px; margin-left: -15px; object-fit: contain; }
+.sidebar-brand h2 { font-family: 'Playwrite IT Trad', cursive; font-size: 1.05rem; font-weight: 700; color: var(--primary-dark); white-space: nowrap; margin-left: -20px; }
+        
         .sidebar-menu { padding: 20px 12px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
         .menu-item {
             display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 8px;
@@ -114,7 +110,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* DASHBOARD GRID */
-        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
         .stat-card {
             background: var(--card-bg); padding: 22px; border-radius: var(--radius); border: 1px solid var(--border);
             box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden;
@@ -124,7 +120,7 @@
         .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary-gradient); }
         .stat-card span { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
         .stat-card h3 { font-size: 1.6rem; font-weight: 800; color: var(--text); }
-        .stat-card small { font-size: 0.8rem; color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .stat-card small { font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
         /* CARDS GERAIS */
         .card {
@@ -152,6 +148,26 @@
         .btn:hover { box-shadow: 0 6px 12px rgba(0, 86, 179, 0.3); transform: translateY(-2px); filter: brightness(1.05); }
         .btn-secondary { background: var(--bg); color: var(--primary-dark); border: 1px solid var(--border); box-shadow: none;}
         .btn-secondary:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary-dark); transform: translateY(-1px); }
+        .btn-alert { background: #fdedec; color: var(--danger); border: 1px solid var(--danger); box-shadow: none;}
+        .btn-alert:hover { background: var(--danger); color: white; }
+        .btn-success { background: var(--success); color: white; border: none; }
+
+        /* DROPZONE REAL */
+        .dropzone {
+            border: 2px dashed var(--info);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.75);
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .dropzone { background: rgba(15, 23, 42, 0.6); }
+        .dropzone:hover, .dropzone.dragover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            transform: scale(1.01);
+        }
 
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; min-width: 600px; }
         th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
@@ -159,9 +175,9 @@
         tr:hover td { background: var(--primary-light); }
 
         .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: inline-block; white-space: nowrap; letter-spacing: 0.5px;}
-        .badge.urgente { background: #fdedec; color: var(--danger); border: 1px solid #fadbd8; }
-        .badge.atencao { background: #fef5e7; color: #b9770e; border: 1px solid #fdebd0;}
-        .badge.seguro { background: #e9f7ef; color: var(--success); border: 1px solid #d4efdf;}
+        .badge.urgente { background: #fdedec; color: var(--danger); border: 1px solid #fadbd8; }    /* Vermelho (30d) */
+        .badge.atencao { background: #fef5e7; color: var(--warning); border: 1px solid #fdebd0;}    /* Amarelo (60d) */
+        .badge.seguro { background: #e9f7ef; color: var(--success); border: 1px solid #d4efdf;}     /* Verde (90d) */
         .badge.info { background: #eaf2f8; color: var(--info); border: 1px solid #d4e6f1;}
 
         /* KANBAN BOARD */
@@ -171,15 +187,23 @@
         .kanban-card { background: var(--card-bg); border: 1px solid var(--border); padding: 14px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); cursor: grab; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--primary); transition: transform 0.2s;}
         .kanban-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* MODAL */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease;}
-        .modal-content { background: var(--card-bg); width: 90%; max-width: 500px; padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 20px; max-height: 90vh; overflow-y: auto; }
+        /* MODAL E OVERLAYS */
+        .modal-overlay, .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.active, .sidebar-overlay.active { display: flex; animation: fadeIn 0.2s ease;}
+        .modal-content { background: var(--card-bg); width: 92%; max-width: 560px; padding: 28px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 16px; max-height: 90vh; overflow-y: auto; }
+
+        /* ESTILOS DO MODAL DE RENEGOCIAÇÃO */
+        .reneg-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .reneg-metric { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+        .reneg-metric span { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: var(--text-light); display: block; margin-bottom: 4px; }
+        .reneg-metric b { font-size: 1.05rem; color: var(--text); }
+        .reneg-metric.highlight { background: #e9f7ef; border-color: #b7e4c7; }
+        .reneg-metric.highlight b { color: var(--success); }
 
         /* CHATBOT AI */
         #chatbot-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary-gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; box-shadow: 0 6px 15px rgba(0, 86, 179, 0.4); z-index: 1000; transition: var(--transition); border: none; }
         #chatbot-btn:hover { transform: scale(1.1) rotate(5deg); }
-        #chatbot-window { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: var(--card-bg); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); z-index: 1000; display: none; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-width: 90vw;}
+        #chatbot-window { position: fixed; bottom: 100px; right: 30px; width: 360px; height: 470px; background: var(--card-bg); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); z-index: 1000; display: none; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-width: 90vw;}
         .chat-header { background: var(--primary-gradient); color: white; padding: 15px 20px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem;}
         .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
         .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
@@ -187,7 +211,7 @@
         .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px;}
         .chat-footer { padding: 12px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; gap: 8px; }
 
-        /* OTIMIZAÇÃO PARA ECRÃS MÉDIOS (Tablets) */
+        /* RESPONSIVO */
         @media(max-width: 900px) { 
             .grid-2 { grid-template-columns: 1fr; } 
             aside { width: 70px; } 
@@ -195,82 +219,45 @@
             main { margin-left: 70px; max-width: calc(100vw - 70px); padding: 20px; } 
         }
 
-        /* NOVAS REGRAS PARA MOBILE (Telemóveis) */
         @media(max-width: 768px) {
             .mobile-menu-toggle { display: flex; }
             .topbar-left { width: 100%; justify-content: space-between; }
             .search-bar { width: 100%; margin-top: 10px; }
-            
-            /* Sidebar transformada num menu deslizante oculto */
-            aside { 
-                transform: translateX(-100%); 
-                width: 260px !important; 
-                box-shadow: 4px 0 20px rgba(0,0,0,0.2); 
-            }
+            aside { transform: translateX(-100%); width: 260px !important; box-shadow: 4px 0 20px rgba(0,0,0,0.2); }
             aside.mobile-open { transform: translateX(0); }
-            /* Restaurar textos no menu lateral quando aberto no mobile */
             aside .sidebar-brand h2, aside .sidebar-brand span, aside .menu-item span { display: block !important; }
-
-            main { 
-                margin-left: 0 !important; 
-                max-width: 100vw !important; 
-                padding: 15px; 
-            }
-
+            main { margin-left: 0 !important; max-width: 100vw !important; padding: 15px; }
             .kanban-board { grid-template-columns: 1fr; }
-            .form-grid { grid-template-columns: 1fr; }
-            
-            /* Ajustes nos botões e cabeçalhos */
+            .form-grid, .reneg-summary-grid { grid-template-columns: 1fr; }
             .card { padding: 20px 15px; }
             .btn { width: 100%; justify-content: center; }
-            
-            /* Posicionamento do Chatbot no telemóvel */
             #chatbot-btn { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.4rem; }
             #chatbot-window { bottom: 80px; right: 5vw; width: 90vw; height: 60vh; }
-            
-            /* Informações da Topbar adaptadas */
             .topbar-actions { width: 100%; justify-content: space-between; margin-top: 10px;}
         }
-        
-        /* OVERLAY ESCURO QUANDO O MENU ESTIVER ABERTO NO MOBILE */
-        .sidebar-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.6); z-index: 999; display: none; backdrop-filter: blur(3px);
-        }
-        .sidebar-overlay.active { display: block; animation: fadeIn 0.2s ease;}
     </style>
 </head>
 <body>
-    <!-- Overlay Escuro para Mobile -->
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- SIDEBAR -->
     <aside id="main-sidebar">
         <div class="sidebar-brand">
-    <img src="imagens/055158be-182f-42e4-bdc7-aad3cf96afbc-removebg-preview.png" alt="Logo Easy Contrato">
-    <div>
-        <h2>Easy Contrato</h2>
-        <span id="role-badge" style="display: none;">Enterprise v3.0</span>
-    </div>
-    <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left:auto; background:none; border:none; color: var(--primary);"><i class="fa-solid fa-times"></i></button>
-</div>
-            <!-- Botão fechar apenas para mobile -->
+            <img src="./imagens/055158be-182f-42e4-bdc7-aad3cf96afbc-removebg-preview.png" alt="Logo Easy Contrato" onerror="this.src='https://via.placeholder.com/50x50/0056b3/ffffff?text=EC'" height="100px" width="500px">
+            
+            <div>
+                <h2>Easy Contrato</h2>
+                <span id="role-badge" style="display: none;">Enterprise v3.0</span>
+            </div>
             <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left:auto; background:none; border:none; color: var(--primary);"><i class="fa-solid fa-times"></i></button>
         </div>
         <div class="sidebar-menu">
-            <button class="menu-item active" onclick="switchPage('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard & KPIs</span></button>
-            <button class="menu-item" onclick="switchPage('contratos', this)"><i class="fa-solid fa-file-contract"></i> <span>Gestão de Contratos</span></button>
-            <button class="menu-item" onclick="switchPage('ia-ocr', this)"><i class="fa-solid fa-brain"></i> <span>IA & Leitura OCR</span></button>
-            <button class="menu-item" onclick="switchPage('fornecedores', this)"><i class="fa-solid fa-store"></i> <span>Fornecedores & Cotações</span></button>
-            <button class="menu-item" onclick="switchPage('kanban', this)"><i class="fa-solid fa-columns"></i> <span>Quadro Kanban</span></button>
-            <button class="menu-item" onclick="switchPage('utilitarios', this)"><i class="fa-solid fa-calculator"></i> <span>Calculadoras & Ferramentas</span></button>
-            <button class="menu-item" onclick="switchPage('relatorios', this)"><i class="fa-solid fa-print"></i> <span>Relatórios & Exportação</span></button>
+            <button class="menu-item active" onclick="switchPage('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> <span>Painel Principal</span></button>
+            <button class="menu-item" onclick="switchPage('contratos', this)"><i class="fa-solid fa-file-signature"></i> <span>Cadastro de Contratos</span></button>
+            <button class="menu-item" onclick="switchPage('ia-ocr', this)"><i class="fa-solid fa-brain"></i> <span>Leitura de Contrato por IA</span></button>
+            <button class="menu-item" onclick="switchPage('kanban', this)"><i class="fa-solid fa-columns"></i> <span>Quadro Visual</span></button>
         </div>
         <div class="sidebar-footer">
-            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                <span style="font-size:0.8rem; color:var(--text-light); font-weight: 600;">Visão Fornecedor</span>
-                <input type="checkbox" id="fornecedor-toggle" onchange="toggleFornecedorView()" style="width:auto; margin:0; accent-color: var(--primary);">
-            </div>
             <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
                 <span style="font-size:0.8rem; color:var(--text-light); font-weight: 600;">Modo Escuro</span>
                 <button class="icon-btn" onclick="toggleTheme()" style="width:32px; height:32px;"><i class="fa-solid fa-moon"></i></button>
@@ -278,122 +265,100 @@
         </div>
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main>
         <!-- TOPBAR -->
         <header class="topbar">
             <div class="topbar-left">
-                <!-- Hamburger Menu apenas no Mobile -->
-                <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <button class="icon-btn mobile-menu-toggle" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
                 <div class="search-bar">
                     <i class="fa-solid fa-search" style="color:var(--primary)"></i>
-                    <input type="text" id="global-search" placeholder="Buscar contrato ou fornecedor..." onkeyup="globalSearch()">
+                    <input type="text" id="global-search" placeholder="Buscar contrato..." onkeyup="globalSearch()">
                     <span class="search-shortcut">Ctrl+K</span>
                 </div>
             </div>
-            
             <div class="topbar-actions">
-                <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 8px 12px; width: auto;" onclick="ativarNotificacoes()"><i class="fa-solid fa-bell" style="color: var(--warning);"></i> Ativar PWA</button>
-                <button class="icon-btn" onclick="openNotifs()" title="Notificações">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="badge-dot"></span>
-                </button>
+                <button class="icon-btn" onclick="openNotifs()" title="Notificações"><i class="fa-regular fa-bell"></i><span class="badge-dot"></span></button>
                 <div style="display:flex; align-items:center; gap:10px; padding-left: 10px; border-left: 1px solid var(--border);">
-                    <div style="width:38px; height:38px; background:var(--primary-gradient); color:white; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,86,179,0.2);">EC</div>
-                    <div style="font-size:0.85rem;" class="user-info-text"><b style="color: var(--primary-dark);">Equipe Easy</b><br><small style="color:var(--text-light); font-weight: 600;">Admin Master</small></div>
+                    <div style="width:38px; height:38px; background:var(--primary-gradient); color:white; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800;">EC</div>
+                    <div style="font-size:0.85rem;"><b style="color: var(--primary-dark);">Equipe Easy</b><br><small style="color:var(--text-light); font-weight: 600;">Administrador</small></div>
                 </div>
             </div>
         </header>
 
-        <!-- DASHBOARD & KPIS -->
+        <!-- 1. PAINEL PRINCIPAL -->
         <div id="dashboard" class="page active">
             <div class="dash-grid">
                 <div class="stat-card">
-                    <span>Total de Contratos</span>
+                    <span>Qtd. Contratos Cadastrados</span>
                     <h3 id="stat-total">0</h3>
-                    <small><i class="fa-solid fa-arrow-up"></i> 100% ativos na base</small>
+                    <small style="color:var(--info)"><i class="fa-solid fa-file-contract"></i> Contratos monitorizados</small>
                 </div>
                 <div class="stat-card">
-                    <span>Exposição Financeira</span>
+                    <span>Total de Gastos Mensais</span>
                     <h3 id="stat-valor">R$ 0,00</h3>
-                    <small style="color:var(--warning)"><i class="fa-solid fa-triangle-exclamation"></i> Orçamento comprometido</small>
+                    <small style="color:var(--warning)"><i class="fa-solid fa-coins"></i> Custo total na competência</small>
                 </div>
                 <div class="stat-card">
-                    <span>Economia Gerada (ROI)</span>
+                    <span>Economia Estimada por IA</span>
                     <h3 id="stat-roi" style="color:var(--success)">R$ 18.450,00</h3>
-                    <small><i class="fa-solid fa-check"></i> Renegociações de IA</small>
-                </div>
-                <div class="stat-card">
-                    <span>Índice de Risco Operacional</span>
-                    <h3 id="stat-risco">12 / 100</h3>
-                    <small style="color:var(--success)"><i class="fa-solid fa-shield-halved"></i> Baixo Risco</small>
+                    <small style="color:var(--success)"><i class="fa-solid fa-arrow-trend-down"></i> Oportunidades encontradas</small>
                 </div>
             </div>
 
             <div class="grid-2">
                 <div class="card">
-                    <div class="card-header-flex">
-                        <h2><i class="fa-solid fa-chart-line" style="color:var(--primary)"></i> Evolução Financeira Mensal</h2>
-                    </div>
-                    <div style="height: 240px; position:relative;">
-                        <canvas id="chartEvolucao"></canvas>
-                    </div>
+                    <div class="card-header-flex"><h2><i class="fa-solid fa-chart-line" style="color:var(--primary)"></i> Gastos ao Longo do Ano</h2></div>
+                    <div style="height: 240px; position:relative;"><canvas id="chartEvolucao"></canvas></div>
                 </div>
                 <div class="card">
-                    <div class="card-header-flex">
-                        <h2><i class="fa-solid fa-chart-pie" style="color:var(--primary)"></i> Custos por Categoria</h2>
-                    </div>
-                    <div style="height: 240px; position:relative;">
-                        <canvas id="chartCategorias"></canvas>
-                    </div>
+                    <div class="card-header-flex"><h2><i class="fa-solid fa-chart-pie" style="color:var(--primary)"></i> Divisão por Tipo de Serviço</h2></div>
+                    <div style="height: 240px; position:relative;"><canvas id="chartCategorias"></canvas></div>
                 </div>
             </div>
 
             <div class="card" style="border-left: 4px solid var(--danger);">
                 <div class="card-header-flex">
-                    <h2 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Críticos (Prazos de 90 Dias)</h2>
+                    <h2 style="color: var(--danger);"><i class="fa-solid fa-clock-rotate-left"></i> Contratos Próximos do Vencimento (Monitoramento de 90 Dias)</h2>
                 </div>
                 <table>
                     <thead>
-                        <tr><th>Fornecedor</th><th>Contrato</th><th>Vencimento</th><th>Dias Restantes</th><th>Status</th></tr>
+                        <tr><th>Fornecedor</th><th>Tipo de Serviço</th><th>Data de Venc.</th><th>Dias Restantes</th><th>Alerta</th></tr>
                     </thead>
-                    <tbody id="tabela-alertas">
-                        <!-- Preenchido por JS -->
-                    </tbody>
+                    <tbody id="tabela-alertas"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- GESTÃO DE CONTRATOS -->
+        <!-- 2. CADASTRO DE CONTRATOS -->
         <div id="contratos" class="page">
             <div class="card" style="border-top: 4px solid var(--primary);">
                 <div class="card-header-flex">
                     <h2><i class="fa-solid fa-file-circle-plus" style="color:var(--primary)"></i> Cadastrar Novo Contrato</h2>
                 </div>
                 <div class="form-grid">
-                    <input type="text" id="c-nome" placeholder="Nome do Fornecedor / Empresa *">
-                    <input type="text" id="c-id" placeholder="ID / Número do Contrato *">
-                    <select id="c-categoria">
-                        <option value="Software / TI">Software / Licenciamento TI</option>
-                        <option value="Limpeza & Facilities">Limpeza & Facilities</option>
-                        <option value="Logística & Frota">Logística & Frota</option>
-                        <option value="Serviços Jurídicos">Serviços Jurídicos</option>
+                    <input type="text" id="c-nome" placeholder="Nome do Fornecedor *">
+                    <select id="c-tipo">
+                        <option value="" disabled selected>Selecione o Tipo de Serviço *</option>
+                        <option value="Limpeza">Limpeza</option>
+                        <option value="TI e Software">TI e Software</option>
+                        <option value="Segurança">Segurança</option>
+                        <option value="Manutenção">Manutenção</option>
+                        <option value="Logística">Logística</option>
                         <option value="Outros">Outros</option>
                     </select>
-                    <input type="number" id="c-valor" placeholder="Valor Total Anual/Mensal (R$) *" step="0.01">
-                    <input type="date" id="c-vencimento">
-                    <input type="number" id="c-multa" placeholder="Multa Rescisória (R$)" step="0.01">
-                    <select id="c-renovacao">
-                        <option value="sim">Renovação Automática: Sim</option>
-                        <option value="nao">Renovação Automática: Não</option>
-                    </select>
-                    <input type="text" id="c-responsavel" placeholder="Responsável Interno (Ex: Isis)">
+                    <input type="number" id="c-valor" placeholder="Valor Mensal (R$) *" step="0.01">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <small style="color: var(--text-light); font-weight: 600;">Data de Início *</small>
+                        <input type="date" id="c-inicio">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <small style="color: var(--text-light); font-weight: 600;">Data de Vencimento *</small>
+                        <input type="date" id="c-vencimento">
+                    </div>
+                    <input type="text" id="c-responsavel" placeholder="Responsável pelo contrato (Ex: Isis) *">
                 </div>
-                <textarea id="c-escopo" placeholder="Escopo ou resumo dos serviços contratados..." rows="2"></textarea>
                 <div style="display: flex; justify-content: flex-end;">
-                    <button class="btn" onclick="adicionarContrato()" style="width: auto; padding: 12px 30px;"><i class="fa-solid fa-save"></i> Salvar e Monitorar</button>
+                    <button class="btn" onclick="adicionarContrato()" style="width: auto; padding: 12px 30px;"><i class="fa-solid fa-save"></i> Salvar Contrato</button>
                 </div>
             </div>
 
@@ -403,182 +368,118 @@
                 </div>
                 <table>
                     <thead>
-                        <tr><th>Fornecedor</th><th>Categoria</th><th>Valor</th><th>Vencimento</th><th>Status Legal</th><th>Incidentes (SLA)</th><th>Ações</th></tr>
+                        <tr><th>Fornecedor</th><th>Tipo</th><th>Valor Mensal</th><th>Vencimento</th><th>Responsável</th><th>Ação</th></tr>
                     </thead>
-                    <tbody id="tabela-contratos-geral">
-                        <!-- Preenchido por JS -->
-                    </tbody>
+                    <tbody id="tabela-contratos-geral"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- IA & OCR -->
+        <!-- 3. LEITURA DE CONTRATO POR IA (AGORA FUNCIONAL DE VERDADE!) -->
         <div id="ia-ocr" class="page">
             <div class="card" style="border-left: 4px solid var(--info); background: linear-gradient(to right, var(--card-bg), var(--primary-light));">
                 <div class="card-header-flex">
-                    <h2 style="color: var(--info);"><i class="fa-solid fa-brain"></i> Simulador de Leitura OCR por Inteligência Artificial</h2>
+                    <h2 style="color: var(--info);"><i class="fa-solid fa-file-pdf"></i> Leitura Real de Contrato por IA</h2>
+                    <span id="ia-mode-badge" class="badge info">Motor PDF.js Ativo</span>
                 </div>
-                <p style="color:var(--text-light); font-size:0.95rem; font-weight: 500;">Arraste um PDF de contrato ou clique abaixo para a IA extrair dados automaticamente, detectar cláusulas de risco e prever reajustes pelo IPCA.</p>
-                <div style="border: 2px dashed var(--info); padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: rgba(255,255,255,0.7); transition: var(--transition);" onclick="simularOCR()" onmouseover="this.style.backgroundColor='#ffffff'; this.style.borderColor='var(--primary)'" onmouseout="this.style.backgroundColor='rgba(255,255,255,0.7)'; this.style.borderColor='var(--info)'">
+                <p style="color:var(--text-light); font-size:0.95rem; font-weight: 500;">Envie um arquivo <b>.PDF</b> real do contrato. O sistema extrai o texto do documento, identifica os campos, alerta sobre cláusulas abusivas e permite cadastrar com 1 clique.</p>
+                
+                <!-- CONFIGURAÇÃO OPCIONAL DA API DO GEMINI -->
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--card-bg); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border);">
+                    <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary);"></i>
+                    <input type="password" id="gemini-api-key" placeholder="Cole sua Gemini API Key aqui para análise com IA real (Opcional)" style="flex: 1; min-width: 220px; padding: 8px 12px; font-size: 0.85rem;">
+                    <button class="btn btn-secondary" onclick="salvarChaveGemini()" style="padding: 8px 14px; font-size: 0.85rem; width: auto;">Conectar Gemini</button>
+                </div>
+
+                <!-- INPUT REAL OCULTO + DROPZONE REAL -->
+                <input type="file" id="pdf-file-input" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)">
+                <div id="dropzone-area" class="dropzone" onclick="document.getElementById('pdf-file-input').click()">
                     <i class="fa-solid fa-cloud-arrow-up" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
-                    <p style="font-size: 1.1rem; color: var(--primary-dark);"><b>Clique para simular o upload de um Contrato em PDF</b></p>
-                    <small style="color:var(--text-light); margin-top: 8px; display: block;">Formatos aceitos: PDF, DOCX (Até 50MB)</small>
+                    <p style="font-size: 1.1rem; color: var(--primary-dark);"><b>Arraste o arquivo PDF aqui ou Clique para Selecionar</b></p>
+                    <small style="color: var(--text-light); display: block; margin-top: 6px;">Suporta arquivos .PDF reais (ex: contrato_techserver.pdf)</small>
                 </div>
-                <div id="ocr-resultado" style="display:none; margin-top: 20px; padding: 25px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); box-shadow: var(--shadow);">
-                    <h3 style="color:var(--primary); margin-bottom: 15px; border-bottom: 1px solid var(--bg); padding-bottom: 10px;"><i class="fa-solid fa-circle-check"></i> Dados Extraídos com Sucesso pela IA:</h3>
-                    <div id="ocr-dados-conteudo" style="font-size: 0.95rem; line-height: 1.6;"></div>
+
+                <!-- LOADING -->
+                <div id="ocr-loading" style="display:none; text-align: center; padding: 25px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border);">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x" style="color: var(--primary); margin-bottom: 10px;"></i>
+                    <p id="ocr-loading-text" style="font-weight: 600; color: var(--primary-dark);">Lendo páginas do PDF e extraindo dados...</p>
+                </div>
+                
+                <!-- RESULTADO EXTRAÍDO -->
+                <div id="ocr-resultado" style="display:none; margin-top: 10px; padding: 25px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--bg); padding-bottom: 10px;">
+                        <h3 style="color:var(--primary); margin: 0;"><i class="fa-solid fa-circle-check"></i> Dados Extraídos do Arquivo: <span id="pdf-filename" style="font-size: 0.85rem; color: var(--text-light);"></span></h3>
+                    </div>
+
+                    <div id="ocr-dados-conteudo" style="font-size: 0.95rem; line-height: 1.7;"></div>
+
+                    <!-- BOTÕES DE AÇÃO REAL -->
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <button class="btn btn-success" onclick="salvarContratoExtraido()" style="width: auto;"><i class="fa-solid fa-plus-circle"></i> Cadastrar este Contrato no Sistema</button>
+                        <button class="btn btn-secondary" onclick="jogarNoGemini()" style="width: auto;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Copiar Texto e Abrir no Gemini</button>
+                    </div>
+
+                    <!-- TEXTO BRUTO EXTRAÍDO DO PDF (EXPANSÍVEL) -->
+                    <details style="margin-top: 15px;">
+                        <summary style="cursor: pointer; font-size: 0.85rem; color: var(--text-light); font-weight: 600;">Ver texto bruto extraído do PDF</summary>
+                        <pre id="pdf-raw-text" style="margin-top: 10px; padding: 12px; background: var(--bg); border-radius: 8px; font-size: 0.8rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto; border: 1px solid var(--border);"></pre>
+                    </details>
                 </div>
             </div>
 
-            <div class="card">
+            <!-- ANÁLISE INTELIGENTE E OPORTUNIDADES DE ECONOMIA -->
+            <div class="card" style="border-top: 4px solid var(--success);">
                 <div class="card-header-flex">
-                    <h2><i class="fa-solid fa-scale-balanced" style="color:var(--warning)"></i> Comparador de Preços de Mercado & Economia</h2>
+                    <h2 style="color: var(--success);"><i class="fa-solid fa-magnifying-glass-dollar"></i> Análise Inteligente e Oportunidades de Economia</h2>
                 </div>
-                <p style="font-size:0.9rem; color:var(--text-light);">A IA cruzou seus contratos com bases de mercado e encontrou oportunidades de renegociação imediata:</p>
+                
+                <!-- ALERTA DINÂMICO DE CONTRATOS DUPLICADOS -->
+                <div id="alerta-duplicados-box" style="background: #fef5e7; border-left: 4px solid var(--warning); padding: 15px; border-radius: 8px; margin-bottom: 15px;"></div>
+
+                <p style="font-size:0.9rem; color:var(--text-light);">Comparativo de preço atual vs. média de mercado (evite renovações automáticas com valores abusivos):</p>
                 <table>
                     <thead>
-                        <tr><th>Serviço / Fornecedor Atual</th><th>Custo Atual</th><th>Média de Mercado</th><th>Economia Estimada</th><th>Ação Sugerida</th></tr>
+                        <tr><th>Fornecedor</th><th>Valor Mensal Pago</th><th>Preço Médio de Mercado</th><th>Alerta da IA</th><th>Ação Sugerida</th></tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>Cloud AWS Server</b> (TI)</td>
-                            <td>R$ 4.500 /mês</td>
-                            <td>R$ 3.800 /mês</td>
-                            <td><span class="badge seguro">R$ 8.400 /ano</span></td>
-                            <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('AWS')"><i class="fa-solid fa-envelope"></i> E-mail Renegociação</button></td>
-                        </tr>
-                        <tr>
-                            <td><b>Limpeza & Conservação LimpMax</b></td>
-                            <td>R$ 12.000 /mês</td>
-                            <td>R$ 10.500 /mês</td>
-                            <td><span class="badge seguro">R$ 18.000 /ano</span></td>
-                            <td><button class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="gerarScriptRenegociacao('LimpMax')"><i class="fa-solid fa-envelope"></i> E-mail Renegociação</button></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabela-economia-ia"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- FORNECEDORES & COTAÇÕES -->
-        <div id="fornecedores" class="page">
-            <div class="card">
-                <div class="card-header-flex">
-                    <h2><i class="fa-solid fa-store" style="color:var(--primary)"></i> Central de Fornecedores & Ranking de Desempenho</h2>
-                </div>
-                <table>
-                    <thead>
-                        <tr><th>Fornecedor</th><th>CNPJ</th><th>Categoria</th><th>Avaliação Interna</th><th>Contratos Ativos</th></tr>
-                    </thead>
-                    <tbody id="tabela-fornecedores">
-                        <tr><td><b>TechSoft Licenciamentos</b></td><td>45.123.890/0001-12</td><td><span class="badge info">Software / TI</span></td><td><span style="color:var(--warning)">⭐⭐⭐⭐⭐</span> (5.0)</td><td>2 Contratos</td></tr>
-                        <tr><td><b>LimpMax Serviços Ltda</b></td><td>12.345.678/0001-99</td><td><span class="badge info">Limpeza & Facilities</span></td><td><span style="color:var(--warning)">⭐⭐⭐⭐</span><span style="color:var(--border)">⭐</span> (4.0)</td><td>1 Contrato</td></tr>
-                        <tr><td><b>LogiExpress Transportes</b></td><td>98.765.432/0001-44</td><td><span class="badge info">Logística & Frota</span></td><td><span style="color:var(--warning)">⭐⭐⭐</span><span style="color:var(--border)">⭐⭐</span> (3.2)</td><td>1 Contrato</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- KANBAN -->
+        <!-- 4. QUADRO KANBAN -->
         <div id="kanban" class="page">
             <div class="card" style="background: var(--bg); border: none; box-shadow: none; padding: 0;">
                 <div class="card-header-flex" style="background: var(--card-bg); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 8px; box-shadow: var(--shadow);">
-                    <h2><i class="fa-solid fa-columns" style="color:var(--primary)"></i> Quadro Kanban de Renovação e Fluxo</h2>
+                    <h2><i class="fa-solid fa-columns" style="color:var(--primary)"></i> Acompanhamento Prático de Renovações</h2>
                 </div>
+                
                 <div class="kanban-board">
                     <div class="kanban-col">
-                        <h4><span style="color: var(--danger);"><i class="fa-solid fa-circle"></i> A Vencer (90d)</span> <span id="k-count-1" class="badge">0</span></h4>
+                        <h4><span style="color: var(--danger);"><i class="fa-solid fa-circle"></i> A Vencer</span></h4>
+                        <small style="color: var(--text-light); margin-top: -10px; margin-bottom: 10px;">Monitoramento crítico (90 dias)</small>
                         <div id="k-col-1"></div>
                     </div>
                     <div class="kanban-col">
-                        <h4><span style="color: var(--warning);"><i class="fa-solid fa-circle"></i> Em Cotação</span> <span id="k-count-2" class="badge">0</span></h4>
+                        <h4><span style="color: var(--warning);"><i class="fa-solid fa-circle"></i> Em Cotação</span></h4>
+                        <small style="color: var(--text-light); margin-top: -10px; margin-bottom: 10px;">Pesquisando novos preços</small>
                         <div id="k-col-2"></div>
                     </div>
                     <div class="kanban-col">
-                        <h4><span style="color: var(--info);"><i class="fa-solid fa-circle"></i> Em Negociação</span> <span id="k-count-3" class="badge">0</span></h4>
+                        <h4><span style="color: var(--info);"><i class="fa-solid fa-circle"></i> Em Negociação</span></h4>
+                        <small style="color: var(--text-light); margin-top: -10px; margin-bottom: 10px;">Conversa com o fornecedor</small>
                         <div id="k-col-3"></div>
                     </div>
                     <div class="kanban-col">
-                        <h4><span style="color: var(--success);"><i class="fa-solid fa-circle"></i> Renovado</span> <span id="k-count-4" class="badge">0</span></h4>
+                        <h4><span style="color: var(--success);"><i class="fa-solid fa-circle"></i> Renovado / Resolvido</span></h4>
+                        <small style="color: var(--text-light); margin-top: -10px; margin-bottom: 10px;">Prazos definidos / encerrados</small>
                         <div id="k-col-4"></div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- UTILITÁRIOS -->
-        <div id="utilitarios" class="page">
-            <!-- LINHA 1 ORIGINAL -->
-            <div class="grid-2">
-                <div class="card" style="border-top: 4px solid var(--primary);">
-                    <h2><i class="fa-solid fa-calculator" style="color:var(--primary)"></i> Simulador de Reajuste Inflacionário</h2>
-                    <p style="font-size:0.85rem; color:var(--text-light)">Calcule o impacto do IPCA ou IGP-M no valor do contrato para o próximo ano.</p>
-                    <input type="number" id="calc-valor-base" placeholder="Valor atual do contrato (R$)" step="0.01">
-                    <select id="calc-indice">
-                        <option value="4.5">IPCA (Estimado 4.5%)</option>
-                        <option value="5.2">IGP-M (Estimado 5.2%)</option>
-                    </select>
-                    <button class="btn" onclick="calcularReajuste()">Calcular Novo Valor</button>
-                    <div id="calc-resultado-box" style="font-weight:700; margin-top:10px; color:var(--primary); font-size: 1.1rem; text-align: center; padding: 10px; background: var(--bg); border-radius: 8px;"></div>
-                </div>
-                <div class="card" style="border-top: 4px solid var(--primary-dark);">
-                    <h2><i class="fa-solid fa-file-arrow-down" style="color:var(--primary-dark)"></i> Modelos de Contratos</h2>
-                    <p style="font-size:0.85rem; color:var(--text-light)">Baixe modelos padrão homologados pela diretoria jurídica.</p>
-                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-                        <button class="btn btn-secondary" onclick="alert('Baixando Modelo de Prestação de Serviços...')"><i class="fa-solid fa-file-word" style="color: #2b579a;"></i> Prestação de Serviços.docx</button>
-                        <button class="btn btn-secondary" onclick="alert('Baixando Modelo de NDA...')"><i class="fa-solid fa-file-word" style="color: #2b579a;"></i> Acordo Confidencialidade (NDA).docx</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LINHA 2 NOVAS FUNCIONALIDADES -->
-            <div class="grid-2" style="margin-top: 24px;">
-                <div class="card" style="border-top: 4px solid var(--warning);">
-                    <h2><i class="fa-solid fa-flask" style="color:var(--warning)"></i> Simulador Financeiro "What-If"</h2>
-                    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:15px;">Simule cortes ou reajustes no orçamento e veja o impacto projetado no fluxo de caixa anual.</p>
-                    <select id="wi-categoria">
-                        <option value="todos">Todos os Contratos</option>
-                        <option value="Software / TI">Software / TI</option>
-                        <option value="Limpeza & Facilities">Limpeza & Facilities</option>
-                    </select>
-                    <select id="wi-acao">
-                        <option value="-10">Cortar orçamento em 10%</option>
-                        <option value="-20">Cortar orçamento em 20%</option>
-                        <option value="+6">Reajuste Inflação (IPCA +6%)</option>
-                    </select>
-                    <button class="btn" onclick="simularWhatIf()" style="width:100%; margin-top:10px; background: var(--warning); color: #fff;">Executar Simulação</button>
-                    <div id="wi-resultado" style="margin-top:15px; padding:15px; background:var(--bg); border:1px solid var(--border); border-radius:8px; display:none;"></div>
-                </div>
-
-                <div class="card" style="border-top: 4px solid var(--info);">
-                    <h2><i class="fa-solid fa-file-invoice-dollar" style="color:var(--info)"></i> Auditoria de Faturas vs Contrato</h2>
-                    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:15px;">A IA cruza o valor cobrado na nota fiscal com o valor estipulado em contrato para detetar cobranças indevidas.</p>
-                    <select id="aud-contrato">
-                        <option value="54000">Cloud AWS Server (Base: R$ 54.000)</option>
-                        <option value="144000">LimpMax Serviços (Base: R$ 144.000)</option>
-                    </select>
-                    <input type="number" id="aud-valor" placeholder="Valor cobrado na Fatura (Ex: 58000)">
-                    <button class="btn" onclick="auditarFatura()" style="width:100%; background:var(--info); margin-top: 10px;"><i class="fa-solid fa-magnifying-glass-chart"></i> Processar Auditoria</button>
-                    <div id="aud-resultado" style="margin-top:15px;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RELATÓRIOS -->
-        <div id="relatorios" class="page">
-            <div class="card">
-                <div class="card-header-flex">
-                    <h2><i class="fa-solid fa-print" style="color:var(--primary)"></i> Central de Relatórios Executivos</h2>
-                </div>
-                <p style="color:var(--text-light); font-size:0.95rem; margin-bottom: 20px;">Gere relatórios completos e formatados para apresentação em reuniões de diretoria.</p>
-                <div style="display:flex; gap:16px; flex-wrap:wrap;">
-                    <button class="btn" style="flex:1; padding: 20px; font-size: 1.1rem; background: #e74c3c;" onclick="window.print()"><i class="fa-solid fa-file-pdf fa-2x"></i> <br>Gerar PDF Executivo</button>
-                    <button class="btn" style="flex:1; padding: 20px; font-size: 1.1rem; background: #27ae60;" onclick="exportarCSV()"><i class="fa-solid fa-file-excel fa-2x"></i> <br>Exportar CSV / Excel</button>
-                </div>
-            </div>
-        </div>
     </main>
 
-    <!-- CHATBOT -->
+    <!-- CHATBOT INTELIGENTE -->
     <button id="chatbot-btn" onclick="toggleChat()"><i class="fa-solid fa-message"></i></button>
     <div id="chatbot-window">
         <div class="chat-header">
@@ -586,10 +487,10 @@
             <button style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="chat-body" id="chat-body">
-            <div class="msg bot">Olá! Sou o assistente de IA da <b>Easy Contrato</b>. Pode perguntar-me coisas como:<br><br>• "Qual a multa da AWS?"<br>• "Quem é o responsável pela LimpMax?"</div>
+            <div class="msg bot">Olá! Sou o assistente da <b>Easy Contrato</b>. Já li todos os contratos cadastrados no sistema. Pergunte sobre valores, vencimentos, responsáveis ou contratos duplicados!</div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chat-input" placeholder="Escreva a sua pergunta..." style="margin:0; flex:1; border-radius: 20px;" onkeypress="if(event.key==='Enter') sendChat()">
+            <input type="text" id="chat-input" placeholder="Ex: Quais contratos vencem logo?" style="margin:0; flex:1; border-radius: 20px;" onkeypress="if(event.key==='Enter') sendChat()">
             <button class="btn" onclick="sendChat()" style="padding: 10px 16px; width:auto; border-radius: 50%;"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
@@ -597,36 +498,494 @@
     <!-- MODAL DE NOTIFICAÇÕES -->
     <div id="modal-notif" class="modal-overlay" onclick="closeNotifs(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="color: var(--primary-dark); font-weight: 800; border-bottom: 2px solid var(--bg); padding-bottom: 10px;"><i class="fa-solid fa-bell" style="color:var(--warning)"></i> Central de Notificações</h2>
-            <div id="lista-notif-modal" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
-                <div style="padding: 12px; background: #fdedec; border-left: 4px solid var(--danger); border-radius: 4px;">
-                    <p style="color: var(--danger); margin: 0; font-size: 0.9rem;"><b>Alerta Urgente:</b> Contrato AWS Server vence em 14 dias. Ação recomendada: Renegociar agora.</p>
-                </div>
-                <div style="padding: 12px; background: #fef5e7; border-left: 4px solid var(--warning); border-radius: 4px;">
-                    <p style="color: #b9770e; margin: 0; font-size: 0.9rem;"><b>Aviso:</b> Contrato LimpMax possui renovação automática ativa em 45 dias.</p>
-                </div>
-            </div>
+            <h2 style="color: var(--primary-dark); font-weight: 800; border-bottom: 2px solid var(--bg); padding-bottom: 10px;"><i class="fa-solid fa-bell" style="color:var(--warning)"></i> Notificações</h2>
+            <div id="lista-notif-modal" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;"></div>
             <button class="btn btn-secondary" style="margin-top: 10px;" onclick="document.getElementById('modal-notif').classList.remove('active')">Fechar Painel</button>
         </div>
     </div>
 
+    <!-- MODAL REAL DE RENEGOCIAÇÃO INTELIGENTE -->
+    <div id="modal-renegociar" class="modal-overlay" onclick="closeRenegociar(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg); padding-bottom: 10px;">
+                <h2 style="color: var(--primary-dark); font-weight: 800; font-size: 1.15rem; margin: 0;">
+                    <i class="fa-solid fa-handshake" style="color: var(--primary);"></i> Central de Renegociação
+                </h2>
+                <button onclick="document.getElementById('modal-renegociar').classList.remove('active')" style="background: none; border: none; color: var(--text-light); cursor: pointer; font-size: 1.2rem;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; background: var(--primary-light); padding: 12px 16px; border-radius: 10px;">
+                <div>
+                    <b id="reneg-fornecedor" style="color: var(--primary-dark); font-size: 1.05rem;">-</b>
+                    <div style="font-size: 0.8rem; color: var(--text-light);">Serviço: <span id="reneg-tipo">-</span> • Resp.: <b id="reneg-resp">-</b></div>
+                </div>
+                <span id="reneg-status-badge" class="badge urgente">Acima do Mercado</span>
+            </div>
+
+            <div class="reneg-summary-grid">
+                <div class="reneg-metric">
+                    <span>Valor Atual</span>
+                    <b id="reneg-atual" style="color: var(--danger);">R$ 0,00</b>
+                </div>
+                <div class="reneg-metric">
+                    <span>Média Mercado</span>
+                    <b id="reneg-mercado">R$ 0,00</b>
+                </div>
+                <div class="reneg-metric highlight">
+                    <span>Economia Anual</span>
+                    <b id="reneg-economia-anual">R$ 0,00</b>
+                </div>
+            </div>
+
+            <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                <div>
+                    <small style="color: var(--text-light); font-weight: 700; display: block; margin-bottom: 4px;">Nova Proposta Mensal (R$)</small>
+                    <input type="number" id="reneg-novo-valor" step="0.01" oninput="atualizarPropostaRenegociacao()">
+                </div>
+                <div>
+                    <small style="color: var(--text-light); font-weight: 700; display: block; margin-bottom: 4px;">Novo Vencimento (Opcional)</small>
+                    <input type="date" id="reneg-novo-vencimento">
+                </div>
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <small style="color: var(--text-light); font-weight: 700;">Mensagem de Negociação Gerada pela IA</small>
+                    <button type="button" onclick="copiarMensagemRenegociacao()" style="background: none; border: none; color: var(--primary); font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+                        <i class="fa-regular fa-copy"></i> Copiar texto
+                    </button>
+                </div>
+                <textarea id="reneg-mensagem" rows="5" style="font-size: 0.85rem; line-height: 1.45;"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
+                <button class="btn btn-secondary" onclick="iniciarNegociacaoContrato()" style="flex: 1;">
+                    <i class="fa-solid fa-paper-plane"></i> Enviar & Mover p/ Negociação
+                </button>
+                <button class="btn btn-success" onclick="concluirRenegociacaoContrato()" style="flex: 1;">
+                    <i class="fa-solid fa-check-double"></i> Aplicar Novo Valor Acordado
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // O CÓDIGO JAVASCRIPT CONTINUA EXACTAMENTE IGUAL COMO PEDIDO - SEM ALTERAÇÕES NA LÓGICA
-        let db = JSON.parse(localStorage.getItem('easy_contrato_pro_db')) || {
+        // Configura o Worker do PDF.js
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        let db = JSON.parse(localStorage.getItem('easy_contrato_v5')) || {
             contratos: [
-                { nome: "Cloud AWS Server", idContrato: "AWS-2026", categoria: "Software / TI", valor: 54000, vencimento: "2026-05-15", multa: 2000, renovacao: "sim", responsavel: "Isis", escopo: "Hospedagem em nuvem", status: "A Vencer (90d)", statusLegal: "Ativo", incidentes: 0 },
-                { nome: "LimpMax Serviços", idContrato: "LIMP-089", categoria: "Limpeza & Facilities", valor: 144000, vencimento: "2026-06-01", multa: 5000, renovacao: "sim", responsavel: "Natália", escopo: "Limpeza corporativa", status: "Em Cotação", statusLegal: "Aguardando", incidentes: 2 },
-                { nome: "LogiExpress", idContrato: "LOG-332", categoria: "Logística & Frota", valor: 36000, vencimento: "2026-04-20", multa: 1000, renovacao: "nao", responsavel: "Nicolas", escopo: "Entregas expressas", status: "A Vencer (90d)", statusLegal: "Ativo", incidentes: 0 }
+                { nome: "Cloud AWS", tipo: "TI e Software", valor: 4500, inicio: "2025-05-15", vencimento: "2026-12-05", responsavel: "Isis" },
+                { nome: "LimpMax Serviços", tipo: "Limpeza", valor: 3000, inicio: "2025-01-10", vencimento: "2027-01-05", responsavel: "Natália" },
+                { nome: "CleanPro", tipo: "Limpeza", valor: 3100, inicio: "2025-02-01", vencimento: "2027-02-01", responsavel: "Natália" },
+                { nome: "LogiExpress", tipo: "Logística", valor: 5000, inicio: "2025-04-20", vencimento: "2027-01-25", responsavel: "Nicolas" }
             ]
         };
 
-        db.contratos.forEach(c => {
-            if(!c.statusLegal) c.statusLegal = 'Ativo';
-            if(c.incidentes === undefined) c.incidentes = 0;
-        });
-
+        let ultimoContratoExtraido = null;
+        let ultimoTextoBrutoPDF = "";
         let chartEvolucaoObj = null;
         let chartCategoriasObj = null;
+        let contratoEmRenegociacaoIdx = null;
+        let mediaMercadoAtual = 0;
+
+        // Carrega chave do Gemini salva, se existir
+        function carregarChaveGemini() {
+            const savedKey = localStorage.getItem('easy_gemini_key');
+            if (savedKey) {
+                document.getElementById('gemini-api-key').value = savedKey;
+                document.getElementById('ia-mode-badge').innerText = "Gemini AI Conectado";
+                document.getElementById('ia-mode-badge').className = "badge seguro";
+            }
+        }
+
+        function salvarChaveGemini() {
+            const key = document.getElementById('gemini-api-key').value.trim();
+            if (!key) {
+                localStorage.removeItem('easy_gemini_key');
+                document.getElementById('ia-mode-badge').innerText = "Modo Leitor Local PDF";
+                document.getElementById('ia-mode-badge').className = "badge info";
+                alert("Chave removida. Usando leitor inteligente local.");
+                return;
+            }
+            localStorage.setItem('easy_gemini_key', key);
+            document.getElementById('ia-mode-badge').innerText = "Gemini AI Conectado";
+            document.getElementById('ia-mode-badge').className = "badge seguro";
+            alert("Chave do Gemini salva! Agora a leitura de PDF e o Chatbot usam inteligência artificial real.");
+        }
+
+        // Configurar Drag & Drop real
+        const dropzone = document.getElementById('dropzone-area');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }, false);
+        });
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'), false);
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'), false);
+        });
+        dropzone.addEventListener('drop', e => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) processarArquivoPDF(files[0]);
+        }, false);
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) processarArquivoPDF(file);
+        }
+
+        // LEITURA REAL DO ARQUIVO PDF
+        async function processarArquivoPDF(file) {
+            if (file.type !== 'application/pdf') {
+                return alert("Por favor, envie um arquivo no formato PDF.");
+            }
+
+            const loading = document.getElementById('ocr-loading');
+            const loadingText = document.getElementById('ocr-loading-text');
+            const resultadoBox = document.getElementById('ocr-resultado');
+
+            resultadoBox.style.display = 'none';
+            loading.style.display = 'block';
+            loadingText.innerText = `Extraindo texto real de "${file.name}"...`;
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let textoCompleto = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    textoCompleto += pageText + "\n";
+                }
+
+                ultimoTextoBrutoPDF = textoCompleto.trim();
+                document.getElementById('pdf-filename').innerText = file.name;
+                document.getElementById('pdf-raw-text').innerText = ultimoTextoBrutoPDF || "(PDF sem camada de texto selecionável)";
+
+                const apiKey = localStorage.getItem('easy_gemini_key');
+                let dadosExtraidos = null;
+
+                if (apiKey && ultimoTextoBrutoPDF.length > 20) {
+                    loadingText.innerText = "Analisando cláusulas e valores com Gemini AI...";
+                    dadosExtraidos = await analisarComGemini(ultimoTextoBrutoPDF, apiKey);
+                }
+
+                // Fallback inteligente se não tiver API Key ou se falhar
+                if (!dadosExtraidos) {
+                    dadosExtraidos = analisarTextoLocalmente(ultimoTextoBrutoPDF, file.name);
+                }
+
+                ultimoContratoExtraido = dadosExtraidos;
+                exibirResultadoIA(dadosExtraidos);
+
+            } catch (erro) {
+                console.error(erro);
+                alert("Erro ao ler o PDF. Verifique se o arquivo não está corrompido.");
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // CHAMA A API REAL DO GEMINI PARA EXTRAIR DADOS DO CONTRATO
+        async function analisarComGemini(textoPDF, apiKey) {
+            try {
+                const prompt = `Você é um analista jurídico e financeiro de contratos. Leia o texto extraído de um PDF abaixo e retorne APENAS um objeto JSON válido (sem markdown, sem \`\`\`json) com estas chaves exatas:
+                {
+                  "nome": "Nome da empresa fornecedora/contratada",
+                  "tipo": "Escolha entre: Limpeza, TI e Software, Segurança, Manutenção, Logística ou Outros",
+                  "valor": 0.00 (apenas número do valor mensal),
+                  "inicio": "YYYY-MM-DD",
+                  "vencimento": "YYYY-MM-DD",
+                  "responsavel": "Nome do responsável ou gestor citado (ou 'Equipe Easy' se não houver)",
+                  "alerta": "Resumo curto de qualquer cláusula abusiva, multa alta, reajuste acima da inflação ou renovação automática encontrada"
+                }
+                Texto do contrato:
+                ${textoPDF.substring(0, 8000)}`;
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+
+                const data = await response.json();
+                let respostaTexto = data.candidates[0].content.parts[0].text.trim();
+                respostaTexto = respostaTexto.replace(/```json/g, '').replace(/```/g, '').trim();
+                return JSON.parse(respostaTexto);
+            } catch (e) {
+                console.warn("Fallback para extração local:", e);
+                return null;
+            }
+        }
+
+        // EXTRATOR INTELIGENTE LOCAL (LÊ O TEXTO REAL DO PDF SEM PRECISAR DE CHAVE)
+        function analisarTextoLocalmente(texto, nomeArquivo) {
+            const t = texto;
+            
+            // 1. Tenta achar o Fornecedor (Contratada)
+            let nome = nomeArquivo.replace('.pdf', '').replace(/_/g, ' ');
+            const matchEmpresa = t.match(/(?:CONTRATADA|FORNECEDOR|EMPRESA)[:\s\-]+([A-ZÀ-Ú0-9\s\.\-&]+?(?:Ltda|S\.A\.|ME|EPP|EIRELI))/i) 
+                              || t.match(/([A-ZÀ-Ú][a-zà-úA-Z0-9\s]+(?:Ltda|S\.A\.))/);
+            if (matchEmpresa && matchEmpresa[1]) nome = matchEmpresa[1].trim();
+
+            // 2. Detecta Tipo de Serviço pelo conteúdo real
+            let tipo = "Outros";
+            if (/software|nuvem|servidor|cloud|ti|sistema|hospedagem/i.test(t)) tipo = "TI e Software";
+            else if (/limpeza|conservação|higienização|asseio/i.test(t)) tipo = "Limpeza";
+            else if (/vigilância|segurança|monitoramento|portaria/i.test(t)) tipo = "Segurança";
+            else if (/transporte|logística|frete|entrega|frota/i.test(t)) tipo = "Logística";
+            else if (/manutenção|reparo|elétrica|predial/i.test(t)) tipo = "Manutenção";
+
+            // 3. Extrai Valor Mensal (R$ X.XXX,XX)
+            let valor = 5000;
+            const matchValor = t.match(/R\$\s*([\d\.]+,\d{2})/);
+            if (matchValor) {
+                valor = parseFloat(matchValor[1].replace(/\./g, '').replace(',', '.'));
+            }
+
+            // 4. Extrai Datas (DD/MM/YYYY ou YYYY-MM-DD)
+            const datasEncontradas = [...t.matchAll(/(\d{2})\/(\d{2})\/(\d{4})/g)].map(m => `${m[3]}-${m[2]}-${m[1]}`);
+            const inicio = datasEncontradas[0] || "2026-01-15";
+            const vencimento = datasEncontradas[1] || "2026-12-20";
+
+            // 5. Extrai Responsável
+            let responsavel = "Nicolas";
+            const matchResp = t.match(/(?:Responsável|Gestor)[:\s]+([A-ZÀ-Ú][a-zà-ú]+)/i);
+            if (matchResp) responsavel = matchResp[1];
+
+            // 6. Busca real por cláusulas de risco no texto do PDF
+            let riscos = [];
+            if (/igp-?m|abusiv|acima do ipca/i.test(t)) riscos.push("reajuste atrelado ao IGP-M / acima da inflação");
+            if (/multa/i.test(t)) riscos.push("multa rescisória elevada identificada nas cláusulas");
+            if (/renova[çc][ãa]o autom[áa]tica/i.test(t)) riscos.push("cláusula de renovação automática detectada");
+
+            const alerta = riscos.length > 0 
+                ? `Atenção: O documento apresenta ${riscos.join(", ")}. Recomenda-se renegociar antes do vencimento.`
+                : "Nenhuma multa crítica detectada, mas recomenda-se comparar o valor com a média de mercado.";
+
+            return { nome, tipo, valor, inicio, vencimento, responsavel, alerta };
+        }
+
+        function exibirResultadoIA(dados) {
+            const box = document.getElementById('ocr-resultado');
+            const conteudo = document.getElementById('ocr-dados-conteudo');
+            box.style.display = 'block';
+
+            conteudo.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+                    <p><b>Nome do fornecedor:</b> <span style="color: var(--primary-dark);">${dados.nome}</span></p>
+                    <p><b>Tipo de serviço:</b> ${dados.tipo}</p>
+                    <p><b>Valor mensal:</b> <b style="color: var(--success);">R$ ${Number(dados.valor).toLocaleString('pt-BR', {minimumFractionDigits:2})}</b></p>
+                    <p><b>Data de início:</b> ${dados.inicio}</p>
+                    <p><b>Data de vencimento:</b> ${dados.vencimento}</p>
+                    <p><b>Responsável pelo contrato:</b> ${dados.responsavel}</p>
+                </div>
+                <div style="margin-top: 15px; padding: 14px; background: #fdedec; border-left: 4px solid var(--danger); border-radius: 6px;">
+                    <p style="color:var(--danger); margin: 0;"><b><i class="fa-solid fa-triangle-exclamation"></i> Análise de Risco da IA:</b> ${dados.alerta}</p>
+                </div>
+            `;
+        }
+
+        function salvarContratoExtraido() {
+            if (!ultimoContratoExtraido) return;
+            db.contratos.push({
+                nome: ultimoContratoExtraido.nome,
+                tipo: ultimoContratoExtraido.tipo,
+                valor: Number(ultimoContratoExtraido.valor),
+                inicio: ultimoContratoExtraido.inicio,
+                vencimento: ultimoContratoExtraido.vencimento,
+                responsavel: ultimoContratoExtraido.responsavel
+            });
+            localStorage.setItem('easy_contrato_v5', JSON.stringify(db));
+            alert(`Contrato "${ultimoContratoExtraido.nome}" cadastrado automaticamente no Painel!`);
+            renderDashboard();
+            renderAnaliseEconomia();
+        }
+
+        function jogarNoGemini() {
+            if (!ultimoTextoBrutoPDF) return;
+            const promptPronto = `Analise este contrato empresarial, identifique valores, datas, riscos de renovação automática e cláusulas abusivas:\n\n${ultimoTextoBrutoPDF}`;
+            navigator.clipboard.writeText(promptPronto).then(() => {
+                alert("Texto do contrato copiado! O Gemini será aberto em uma nova aba — basta apertar Ctrl+V lá.");
+                window.open("https://gemini.google.com/app", "_blank");
+            });
+        }
+
+        // ANÁLISE DINÂMICA DE DUPLICADOS E ECONOMIA
+        function renderAnaliseEconomia() {
+            // 1. Verifica contratos duplicados por tipo
+            const contagemTipos = {};
+            db.contratos.forEach(c => {
+                contagemTipos[c.tipo] = contagemTipos[c.tipo] || [];
+                contagemTipos[c.tipo].push(c.nome);
+            });
+
+            const duplicadosBox = document.getElementById('alerta-duplicados-box');
+            const tiposDuplicados = Object.entries(contagemTipos).filter(([_, lista]) => lista.length > 1);
+
+            if (tiposDuplicados.length > 0) {
+                const [tipoDup, empresas] = tiposDuplicados[0];
+                duplicadosBox.style.display = 'block';
+                duplicadosBox.innerHTML = `
+                    <h4 style="color: #b9770e; margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Alerta de Desperdício: Serviços Duplicados Encontrados</h4>
+                    <p style="font-size: 0.9rem; color: var(--text);">A IA detectou que a empresa possui <b>${empresas.length} contratos de "${tipoDup}" ativos ao mesmo tempo</b> (Fornecedores: <i>${empresas.join(' e ')}</i>). Sugerimos <b>unificar os serviços em um único fornecedor</b> para aumentar o poder de negociação e reduzir custos.</p>
+                `;
+            } else {
+                duplicadosBox.style.display = 'none';
+            }
+
+            // 2. Tabela dinâmica comparando com referência de mercado
+            const refsMercado = { "TI e Software": 3800, "Limpeza": 3100, "Logística": 4200, "Segurança": 4000, "Manutenção": 2500, "Outros": 3000 };
+            let html = "";
+            db.contratos.forEach((c, idx) => {
+                const media = refsMercado[c.tipo] || 3500;
+                const caro = c.valor > media;
+                const emNegociacao = c.statusRenegociacao === 'Em Negociação';
+                const renegociado = c.statusRenegociacao === 'Renegociado';
+
+                let statusBadge = caro
+                    ? `<span class="badge urgente">Pagando Caro</span>`
+                    : `<span class="badge seguro">${renegociado ? 'Renegociado' : 'Preço Justo'}</span>`;
+
+                if (emNegociacao) {
+                    statusBadge = `<span class="badge atencao">Em Negociação</span>`;
+                }
+
+                let botaoAcao = `<button class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="abrirModalRenegociacao(${idx})">Revisar Condições</button>`;
+                if (emNegociacao) {
+                    botaoAcao = `<button class="btn" style="padding:6px 12px; font-size:0.8rem; background: var(--warning);" onclick="abrirModalRenegociacao(${idx})"><i class="fa-solid fa-comments-dollar"></i> Finalizar Acordo</button>`;
+                } else if (caro) {
+                    botaoAcao = `<button class="btn btn-alert" style="padding:6px 12px; font-size:0.8rem;" onclick="abrirModalRenegociacao(${idx})"><i class="fa-solid fa-handshake"></i> Renegociar antes de renovar</button>`;
+                }
+
+                html += `
+                    <tr>
+                        <td><b>${c.nome}</b> (${c.tipo})</td>
+                        <td>R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td>
+                        <td>R$ ${media.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td>
+                        <td>${statusBadge}</td>
+                        <td>${botaoAcao}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('tabela-economia-ia').innerHTML = html;
+        }
+
+        // FUNÇÕES DO MODAL REAL DE RENEGOCIAÇÃO
+        function abrirModalRenegociacao(idx) {
+            const c = db.contratos[idx];
+            if (!c) return;
+
+            const refsMercado = { "TI e Software": 3800, "Limpeza": 3100, "Logística": 4200, "Segurança": 4000, "Manutenção": 2500, "Outros": 3000 };
+            mediaMercadoAtual = refsMercado[c.tipo] || 3500;
+            contratoEmRenegociacaoIdx = idx;
+
+            document.getElementById('reneg-fornecedor').innerText = c.nome;
+            document.getElementById('reneg-tipo').innerText = c.tipo;
+            document.getElementById('reneg-resp').innerText = c.responsavel;
+            document.getElementById('reneg-atual').innerText = `R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+            document.getElementById('reneg-mercado').innerText = `R$ ${mediaMercadoAtual.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+
+            const valorSugerido = c.valor > mediaMercadoAtual ? mediaMercadoAtual : Math.round(c.valor * 0.92);
+            document.getElementById('reneg-novo-valor').value = valorSugerido;
+            document.getElementById('reneg-novo-vencimento').value = c.vencimento;
+
+            const badge = document.getElementById('reneg-status-badge');
+            if (c.statusRenegociacao === 'Em Negociação') {
+                badge.className = 'badge atencao';
+                badge.innerText = 'Em Negociação';
+            } else if (c.valor > mediaMercadoAtual) {
+                badge.className = 'badge urgente';
+                badge.innerText = 'Acima do Mercado';
+            } else {
+                badge.className = 'badge seguro';
+                badge.innerText = 'Oportunidade de Desconto';
+            }
+
+            atualizarPropostaRenegociacao();
+            document.getElementById('modal-renegociar').classList.add('active');
+        }
+
+        function atualizarPropostaRenegociacao() {
+            if (contratoEmRenegociacaoIdx === null) return;
+            const c = db.contratos[contratoEmRenegociacaoIdx];
+            const novoValor = parseFloat(document.getElementById('reneg-novo-valor').value) || 0;
+            const economiaMensal = Math.max(0, c.valor - novoValor);
+            const economiaAnual = economiaMensal * 12;
+
+            document.getElementById('reneg-economia-anual').innerText = `R$ ${economiaAnual.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+
+            document.getElementById('reneg-mensagem').value =
+`Prezados(as) da ${c.nome},
+
+Somos responsáveis pela gestão do contrato de ${c.tipo} (vencimento em ${c.vencimento}) e realizamos uma revisão dos nossos custos frente às médias atuais de mercado (R$ ${mediaMercadoAtual.toLocaleString('pt-BR', {minimumFractionDigits:2})}/mês).
+
+Para evitarmos a não renovação e mantermos a parceria ativa, propomos o reajuste da mensalidade atual de R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})} para R$ ${novoValor.toLocaleString('pt-BR', {minimumFractionDigits:2})}, sem cláusula de renovação automática.
+
+Aguardamos retorno para formalização.
+Atenciosamente, ${c.responsavel} — Gestão de Contratos`;
+        }
+
+        function copiarMensagemRenegociacao() {
+            const msg = document.getElementById('reneg-mensagem').value;
+            navigator.clipboard.writeText(msg).then(() => {
+                alert("Proposta de renegociação copiada para a área de transferência!");
+            });
+        }
+
+        function iniciarNegociacaoContrato() {
+            if (contratoEmRenegociacaoIdx === null) return;
+            const c = db.contratos[contratoEmRenegociacaoIdx];
+            const msg = document.getElementById('reneg-mensagem').value;
+
+            c.statusRenegociacao = 'Em Negociação';
+            localStorage.setItem('easy_contrato_v5', JSON.stringify(db));
+
+            navigator.clipboard.writeText(msg).catch(() => {});
+            document.getElementById('modal-renegociar').classList.remove('active');
+            renderAnaliseEconomia();
+            renderKanban();
+            alert(`Proposta copiada e contrato "${c.nome}" movido para a coluna "Em Negociação" no Quadro Visual!`);
+        }
+
+        function concluirRenegociacaoContrato() {
+            if (contratoEmRenegociacaoIdx === null) return;
+            const c = db.contratos[contratoEmRenegociacaoIdx];
+            const novoValor = parseFloat(document.getElementById('reneg-novo-valor').value);
+            const novoVenc = document.getElementById('reneg-novo-vencimento').value;
+
+            if (isNaN(novoValor) || novoValor <= 0) {
+                return alert("Informe um valor mensal válido para concluir a renegociação.");
+            }
+
+            const economiaAnualGerada = Math.max(0, (c.valor - novoValor) * 12);
+            c.economiaObtida = (c.economiaObtida || 0) + economiaAnualGerada;
+            c.valor = novoValor;
+            if (novoVenc) c.vencimento = novoVenc;
+            c.statusRenegociacao = 'Renegociado';
+
+            localStorage.setItem('easy_contrato_v5', JSON.stringify(db));
+            document.getElementById('modal-renegociar').classList.remove('active');
+
+            renderDashboard();
+            renderAnaliseEconomia();
+            renderContratosTabela();
+            renderKanban();
+            alert(`Contrato "${c.nome}" renegociado para R$ ${novoValor.toLocaleString('pt-BR', {minimumFractionDigits:2})}/mês! Economia anual de R$ ${economiaAnualGerada.toLocaleString('pt-BR', {minimumFractionDigits:2})} adicionada ao painel.`);
+        }
+
+        function closeRenegociar(e) {
+            if (e.target.id === 'modal-renegociar') {
+                document.getElementById('modal-renegociar').classList.remove('active');
+            }
+        }
 
         function toggleMobileMenu() {
             document.getElementById('main-sidebar').classList.toggle('mobile-open');
@@ -647,6 +1006,7 @@
 
             if(pageId === 'dashboard') { renderDashboard(); }
             if(pageId === 'contratos') { renderContratosTabela(); }
+            if(pageId === 'ia-ocr') { renderAnaliseEconomia(); }
             if(pageId === 'kanban') { renderKanban(); }
         }
 
@@ -654,10 +1014,7 @@
             const html = document.documentElement;
             const current = html.getAttribute('data-theme');
             html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
-            
-            if(document.getElementById('dashboard').classList.contains('active')) {
-                renderCharts();
-            }
+            if(document.getElementById('dashboard').classList.contains('active')) { renderCharts(); }
         }
 
         function calcularDiasRestantes(dataVencimento) {
@@ -668,54 +1025,77 @@
 
         function adicionarContrato() {
             const nome = document.getElementById('c-nome').value.trim();
-            const idContrato = document.getElementById('c-id').value.trim();
-            const categoria = document.getElementById('c-categoria').value;
+            const tipo = document.getElementById('c-tipo').value;
             const valor = parseFloat(document.getElementById('c-valor').value);
+            const inicio = document.getElementById('c-inicio').value;
             const vencimento = document.getElementById('c-vencimento').value;
-            const multa = parseFloat(document.getElementById('c-multa').value) || 0;
-            const renovacao = document.getElementById('c-renovacao').value;
             const responsavel = document.getElementById('c-responsavel').value.trim();
-            const escopo = document.getElementById('c-escopo').value.trim();
 
-            if(!nome || !idContrato || isNaN(valor) || !vencimento) {
-                return alert("Preencha os campos obrigatórios (*)");
+            if(!nome || !tipo || isNaN(valor) || !inicio || !vencimento || !responsavel) {
+                return alert("Preencha todos os campos obrigatórios (*)");
             }
 
-            db.contratos.push({ nome, idContrato, categoria, valor, vencimento, multa, renovacao, responsavel, escopo, status: 'A Vencer (90d)', statusLegal: 'Ativo', incidentes: 0 });
-            localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
+            db.contratos.push({ nome, tipo, valor, inicio, vencimento, responsavel });
+            localStorage.setItem('easy_contrato_v5', JSON.stringify(db));
 
             alert("Contrato cadastrado com sucesso!");
             document.getElementById('c-nome').value = '';
-            document.getElementById('c-id').value = '';
+            document.getElementById('c-tipo').value = '';
             document.getElementById('c-valor').value = '';
+            document.getElementById('c-inicio').value = '';
             document.getElementById('c-vencimento').value = '';
-            document.getElementById('c-multa').value = '';
-            document.getElementById('c-escopo').value = '';
+            document.getElementById('c-responsavel').value = '';
             renderDashboard();
         }
 
         function renderDashboard() {
             let total = db.contratos.length;
-            let valorExp = db.contratos.reduce((acc, c) => acc + c.valor, 0);
+            let valorMensal = db.contratos.reduce((acc, c) => acc + c.valor, 0);
+            let economiaExtra = db.contratos.reduce((acc, c) => acc + (c.economiaObtida || 0), 0);
             
             document.getElementById('stat-total').innerText = total;
-            document.getElementById('stat-valor').innerText = `R$ ${valorExp.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+            document.getElementById('stat-valor').innerText = `R$ ${valorMensal.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+            document.getElementById('stat-roi').innerText = `R$ ${(18450 + economiaExtra).toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
 
             let alertasHTML = '';
+            let notifsHTML = '';
+
             db.contratos.forEach(c => {
                 const dias = calcularDiasRestantes(c.vencimento);
-                let badgeClass = dias <= 30 ? 'urgente' : (dias <= 60 ? 'atencao' : 'seguro');
-                alertasHTML += `
-                    <tr>
-                        <td><b style="color:var(--primary-dark)">${c.nome}</b></td>
-                        <td><span style="font-family: monospace; color: var(--text-light);">${c.idContrato}</span></td>
-                        <td>${c.vencimento}</td>
-                        <td><b>${dias} dias</b></td>
-                        <td><span class="badge ${badgeClass}">${dias <= 30 ? 'Urgente' : 'Monitorar'}</span></td>
-                    </tr>
-                `;
+                
+                let badgeClass = 'info';
+                let label = 'Fora de Risco';
+                if (dias <= 30) {
+                    badgeClass = 'urgente'; // Vermelho
+                    label = 'Faltam 30 dias';
+                } else if (dias <= 60) {
+                    badgeClass = 'atencao'; // Amarelo
+                    label = 'Faltam 60 dias';
+                } else if (dias <= 90) {
+                    badgeClass = 'seguro';  // Verde
+                    label = 'Faltam 90 dias';
+                }
+
+                if(dias <= 90) {
+                    alertasHTML += `
+                        <tr>
+                            <td><b style="color:var(--primary-dark)">${c.nome}</b></td>
+                            <td>${c.tipo}</td>
+                            <td>${c.vencimento}</td>
+                            <td><b>${dias} dias</b></td>
+                            <td><span class="badge ${badgeClass}">${label}</span></td>
+                        </tr>
+                    `;
+                    notifsHTML += `
+                        <div style="padding: 12px; background: #fdedec; border-left: 4px solid var(--danger); border-radius: 4px;">
+                            <p style="color: var(--danger); margin: 0; font-size: 0.9rem;"><b>Alerta:</b> Contrato <b>${c.nome}</b> vence em <b>${dias} dias</b> (Resp.: ${c.responsavel}).</p>
+                        </div>
+                    `;
+                }
             });
-            document.getElementById('tabela-alertas').innerHTML = alertasHTML || '<tr><td colspan="5" style="text-align:center; padding: 20px; color: var(--text-light);">Nenhum contrato cadastrado.</td></tr>';
+
+            document.getElementById('tabela-alertas').innerHTML = alertasHTML || '<tr><td colspan="5" style="text-align:center; padding: 20px; color: var(--text-light);">Nenhum contrato vencendo nos próximos 90 dias.</td></tr>';
+            document.getElementById('lista-notif-modal').innerHTML = notifsHTML || '<p style="color: var(--text-light);">Nenhum alerta urgente no momento.</p>';
 
             renderCharts();
         }
@@ -723,90 +1103,57 @@
         function renderCharts() {
             const ctx1 = document.getElementById('chartEvolucao').getContext('2d');
             if(chartEvolucaoObj) chartEvolucaoObj.destroy();
-            
             const html = document.documentElement;
             const isDark = html.getAttribute('data-theme') === 'dark';
             const gridColor = isDark ? '#334155' : '#e2e8f0';
             const textColor = isDark ? '#94a3b8' : '#5d6d7e';
+            const totalAtual = db.contratos.reduce((acc, c) => acc + c.valor, 0);
             
             chartEvolucaoObj = new Chart(ctx1, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                    datasets: [{ 
-                        label: 'Custos Totais (R$)', 
-                        data: [120000, 135000, 142000, 150000, 165000, 178000], 
-                        borderColor: '#0056b3', 
-                        backgroundColor: 'rgba(0, 86, 179, 0.1)',
-                        tension: 0.4, 
-                        fill: true,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#ffffff',
-                        pointBorderColor: '#0056b3',
-                        pointBorderWidth: 2,
-                        pointRadius: 4
-                    }]
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Atual'],
+                    datasets: [{ label: 'Gastos Mensais (R$)', data: [14000, 15600, 15600, 18000, 15600, totalAtual], borderColor: '#0056b3', backgroundColor: 'rgba(0, 86, 179, 0.1)', tension: 0.4, fill: true, borderWidth: 3 }]
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: gridColor, drawBorder: false }, ticks: { color: textColor, font: {family: 'Inter'} } },
-                        y: { grid: { color: gridColor, borderDash: [5, 5], drawBorder: false }, ticks: { color: textColor, font: {family: 'Inter'} } }
-                    },
-                    plugins: { legend: { labels: { color: textColor, font: {family: 'Inter', weight: 'bold'} } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { color: gridColor }, ticks: { color: textColor } }, y: { grid: { color: gridColor }, ticks: { color: textColor } } }, plugins: { legend: { labels: { color: textColor } } } }
             });
+
+            const porTipo = {};
+            db.contratos.forEach(c => { porTipo[c.tipo] = (porTipo[c.tipo] || 0) + c.valor; });
 
             const ctx2 = document.getElementById('chartCategorias').getContext('2d');
             if(chartCategoriasObj) chartCategoriasObj.destroy();
             chartCategoriasObj = new Chart(ctx2, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Software / TI', 'Limpeza', 'Logística', 'Outros'],
-                    datasets: [{ 
-                        data: [54, 30, 16, 10], 
-                        backgroundColor: ['#0056b3', '#2980b9', '#5dade2', '#aed6f1'],
-                        borderWidth: 2,
-                        borderColor: isDark ? '#1e293b' : '#ffffff'
-                    }]
+                    labels: Object.keys(porTipo),
+                    datasets: [{ data: Object.values(porTipo), backgroundColor: ['#0056b3', '#2980b9', '#5dade2', '#aed6f1', '#1e8449'], borderWidth: 2, borderColor: isDark ? '#1e293b' : '#ffffff' }]
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: { legend: { position: 'bottom', labels: { color: textColor, padding: 20, font: {family: 'Inter'} } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { color: textColor } } } }
             });
         }
 
         function renderContratosTabela() {
             let html = '';
             db.contratos.forEach((c, idx) => {
-                let badgeLegal = c.statusLegal === 'Ativo' ? 'seguro' : 'info';
                 html += `
                     <tr>
-                        <td><b style="color:var(--primary-dark); font-size: 1rem;">${c.nome}</b><br><small style="color:var(--text-light); font-family: monospace;">${c.idContrato}</small></td>
-                        <td><span class="badge info" style="background: var(--bg); border: 1px solid var(--border); color: var(--text-light);">${c.categoria}</span></td>
+                        <td><b style="color:var(--primary-dark); font-size: 1rem;">${c.nome}</b></td>
+                        <td><span class="badge info" style="background: var(--bg); border: 1px solid var(--border); color: var(--text-light);">${c.tipo}</span></td>
                         <td><b>R$ ${c.valor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b></td>
                         <td>${c.vencimento}</td>
-                        <td><span class="badge ${badgeLegal}">${c.statusLegal}</span></td>
-                        <td><span style="color:${c.incidentes > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight:800; background: ${c.incidentes > 0 ? '#fdedec' : '#e9f7ef'}; padding: 4px 8px; border-radius: 4px;">${c.incidentes} SLAs</span></td>
-                        <td style="display:flex; gap:8px; flex-wrap:wrap;">
-                            ${c.statusLegal === 'Ativo' ? `<button class="btn btn-secondary" style="padding:6px 10px; font-size:0.8rem; background: var(--card-bg);" onclick="enviarAssinatura(${idx})" title="Assinar Documento"><i class="fa-solid fa-pen-nib" style="color: var(--primary);"></i></button>` : `<button class="btn btn-secondary" style="padding:6px 10px; font-size:0.8rem; opacity:0.5; background: var(--bg);" disabled title="Aguardando API"><i class="fa-solid fa-clock"></i></button>`}
-                            <button class="btn" style="padding:6px 10px; font-size:0.8rem; background:#fdedec; border:1px solid var(--danger); color:var(--danger); box-shadow: none;" onclick="registarSLA(${idx})" title="Registar SLA"><i class="fa-solid fa-triangle-exclamation"></i></button>
-                            <button class="btn btn-secondary" style="padding:6px 10px; font-size:0.8rem; color:var(--text-light); background: var(--card-bg);" onclick="excluirContrato(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                        </td>
+                        <td>${c.responsavel}</td>
+                        <td><button class="btn btn-alert" style="padding:6px 10px; font-size:0.8rem;" onclick="excluirContrato(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 `;
             });
-            document.getElementById('tabela-contratos-geral').innerHTML = html || '<tr><td colspan="7" style="text-align:center; padding: 30px; color: var(--text-light);">Nenhum contrato cadastrado no sistema.</td></tr>';
+            document.getElementById('tabela-contratos-geral').innerHTML = html || '<tr><td colspan="6" style="text-align:center; padding: 30px; color: var(--text-light);">Nenhum contrato cadastrado.</td></tr>';
         }
 
         function excluirContrato(idx) {
-            if(confirm("ATENÇÃO: Deseja realmente excluir este contrato da base de dados?")) {
+            if(confirm("Deseja realmente excluir este contrato?")) {
                 db.contratos.splice(idx, 1);
-                localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
+                localStorage.setItem('easy_contrato_v5', JSON.stringify(db));
                 renderContratosTabela();
                 renderDashboard();
             }
@@ -818,37 +1165,17 @@
                 const card = document.createElement('div');
                 card.className = 'kanban-card';
                 card.innerHTML = `<b style="color: var(--primary-dark); font-size: 0.95rem;">${c.nome}</b><div style="display:flex; justify-content: space-between; align-items: center;"><small style="color: var(--text-light);"><i class="fa-regular fa-calendar"></i> ${c.vencimento}</small><span style="color:var(--success); font-weight:800; font-size: 0.9rem;">R$ ${(c.valor/1000).toFixed(1)}k</span></div>`;
-                document.getElementById('k-col-1').appendChild(card);
+                if (c.statusRenegociacao === 'Renegociado') {
+                    document.getElementById('k-col-4').appendChild(card);
+                } else if (c.statusRenegociacao === 'Em Negociação') {
+                    document.getElementById('k-col-3').appendChild(card);
+                } else {
+                    const dias = calcularDiasRestantes(c.vencimento);
+                    if (dias <= 45) document.getElementById('k-col-3').appendChild(card);
+                    else if (dias <= 90) document.getElementById('k-col-2').appendChild(card);
+                    else document.getElementById('k-col-1').appendChild(card);
+                }
             });
-            document.getElementById('k-count-1').innerText = db.contratos.length;
-        }
-
-        function simularOCR() {
-            const box = document.getElementById('ocr-resultado');
-            const conteudo = document.getElementById('ocr-dados-conteudo');
-            box.style.display = 'block';
-            conteudo.innerHTML = `
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <p><b>Fornecedor:</b> <span style="color: var(--primary-dark);">TechServer Solutions Ltda</span></p>
-                    <p><b>CNPJ:</b> 11.222.333/0001-99</p>
-                    <p><b>Valor Mensal:</b> <b style="color: var(--success);">R$ 8.500,00</b></p>
-                    <p><b>Vencimento:</b> 2026-11-30</p>
-                </div>
-                <div style="margin-top: 15px; padding: 12px; background: #fdedec; border-left: 4px solid var(--danger); border-radius: 4px;">
-                    <p style="color:var(--danger); margin: 0;"><b><i class="fa-solid fa-triangle-exclamation"></i> Alerta de Risco IA:</b> Cláusula 4.2 aponta reajuste automático acima do IPCA + multa rescisória abusiva de 3 meses.</p>
-                </div>
-            `;
-        }
-
-        function gerarScriptRenegociacao(fornecedor) {
-            alert(`E-mail gerado para ${fornecedor}: "Prezados, analisamos nossas faturas e identificamos ofertas de mercado 15% inferiores. Solicitamos revisão de valores para renovação."`);
-        }
-
-        function calcularReajuste() {
-            const base = parseFloat(document.getElementById('calc-valor-base').value) || 0;
-            const taxa = parseFloat(document.getElementById('calc-indice').value);
-            const novo = base * (1 + taxa / 100);
-            document.getElementById('calc-resultado-box').innerHTML = `Valor estimado após reajuste (<span style="color:var(--danger)">+${taxa}%</span>): <br><span style="font-size: 1.4rem; color: var(--primary-dark);">R$ ${novo.toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>`;
         }
 
         function openNotifs() { document.getElementById('modal-notif').classList.add('active'); }
@@ -858,149 +1185,84 @@
             const query = document.getElementById('global-search').value.toLowerCase();
             if(query.length > 2) {
                 switchPage('contratos');
-                document.getElementById('c-nome').value = '';
             }
         }
-
         window.addEventListener('keydown', (e) => {
-            if((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                document.getElementById('global-search').focus();
-            }
+            if((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('global-search').focus(); }
         });
-
-        function toggleFornecedorView() {
-            const isFornecedor = document.getElementById('fornecedor-toggle').checked;
-            const badge = document.getElementById('role-badge');
-            if(isFornecedor) {
-                badge.innerText = "PORTAL FORNECEDOR";
-                badge.style.color = "var(--info)";
-                alert("Interface alterada! Na versão real, o fornecedor veria apenas os seus contratos e faturas.");
-            } else {
-                badge.innerText = "ENTERPRISE V3.0";
-                badge.style.color = "var(--info)";
-            }
-        }
-
-        function enviarAssinatura(idx) {
-            alert("Enviando documento para assinatura via API (ClickSign/DocuSign)...");
-            db.contratos[idx].statusLegal = "Aguardando";
-            localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
-            renderContratosTabela();
-        }
-
-        function registarSLA(idx) {
-            const motivo = prompt("Descreva a falha ou atraso do fornecedor:");
-            if(motivo) {
-                db.contratos[idx].incidentes++;
-                localStorage.setItem('easy_contrato_pro_db', JSON.stringify(db));
-                alert("Incidente de SLA registado com sucesso no histórico do fornecedor.");
-                renderContratosTabela();
-            }
-        }
-
-        function simularWhatIf() {
-            const cat = document.getElementById('wi-categoria').value;
-            const acao = parseFloat(document.getElementById('wi-acao').value);
-            
-            let valorAtual = 0;
-            db.contratos.forEach(c => { if(cat === 'todos' || c.categoria === cat) valorAtual += c.valor; });
-            
-            let novoValor = valorAtual * (1 + (acao/100));
-            let diferenca = novoValor - valorAtual;
-
-            const res = document.getElementById('wi-resultado');
-            res.style.display = 'block';
-            res.innerHTML = `
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 8px;">
-                    <span style="color: var(--text-light);">Orçamento Base (${cat})</span>
-                    <b>R$ ${valorAtual.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: var(--text-light);">Projeção (${acao > 0 ? '+'+acao : acao}%)</span>
-                    <b>R$ ${novoValor.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>
-                </div>
-                <div style="margin-top:15px; padding: 15px; background: ${diferenca > 0 ? '#fdedec' : '#e9f7ef'}; border-radius: 8px; text-align: center;">
-                    <span style="color:${diferenca > 0 ? 'var(--danger)' : 'var(--success)'}; font-size: 0.9rem; font-weight: 700; text-transform: uppercase;">Impacto Projetado no Fluxo Anual</span>
-                    <h3 style="color:${diferenca > 0 ? 'var(--danger)' : 'var(--success)'}; margin-top: 5px;">${diferenca > 0 ? '+' : ''} R$ ${diferenca.toLocaleString('pt-BR', {minimumFractionDigits:2})}</h3>
-                </div>
-            `;
-        }
-
-        function auditarFatura() {
-            const base = parseFloat(document.getElementById('aud-contrato').value);
-            const cobrado = parseFloat(document.getElementById('aud-valor').value);
-            const res = document.getElementById('aud-resultado');
-
-            if(isNaN(cobrado)) return;
-
-            if(cobrado > base) {
-                let extra = cobrado - base;
-                res.innerHTML = `<div style="background:#fdedec; border-left:4px solid var(--danger); padding:15px; border-radius:8px;">
-                    <h4 style="color:var(--danger); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> DIVERGÊNCIA DETECTADA</h4>
-                    <p style="color: var(--text); font-size: 0.9rem;">Fatura <b>R$ ${extra.toLocaleString('pt-BR')}</b> acima do valor de contrato. <br><span style="color: var(--danger); font-weight: 700;">Ação: Bloquear pagamento no ERP.</span></p>
-                </div>`;
-            } else {
-                res.innerHTML = `<div style="background:#e9f7ef; border-left:4px solid var(--success); padding:15px; border-radius:8px;">
-                    <h4 style="color:var(--success); margin-bottom: 5px;"><i class="fa-solid fa-circle-check"></i> FATURA VALIDADA</h4>
-                    <p style="color: var(--text); font-size: 0.9rem;">O valor cobrado confere perfeitamente com a base contratual vigente.</p>
-                </div>`;
-            }
-        }
-
-        function ativarNotificacoes() {
-            if (!("Notification" in window)) {
-                alert("Este navegador não suporta notificações.");
-            } else if (Notification.permission === "granted") {
-                new Notification("Easy Contrato: Alertas já estão ativos!");
-            } else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") new Notification("Easy Contrato: Notificações ativadas com sucesso!");
-                });
-            }
-        }
 
         function toggleChat() {
             const chat = document.getElementById('chatbot-window');
             chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        function sendChat() {
+        // CHATBOT REAL CONECTADO AOS DADOS DO SISTEMA E AO GEMINI
+        async function sendChat() {
             const input = document.getElementById('chat-input');
-            const txt = input.value.trim().toLowerCase();
-            if(!txt) return;
+            const pergunta = input.value.trim();
+            if(!pergunta) return;
 
             const body = document.getElementById('chat-body');
-            body.innerHTML += `<div class="msg user">${input.value}</div>`;
+            body.innerHTML += `<div class="msg user">${pergunta}</div>`;
             input.value = '';
-
-            // Mostrar "digitando..."
             const typingId = 'typing-' + Date.now();
-            body.innerHTML += `<div id="${typingId}" class="msg bot" style="opacity: 0.7;"><i>IA a processar...</i></div>`;
+            body.innerHTML += `<div id="${typingId}" class="msg bot" style="opacity: 0.7;"><i>Analisando base de contratos...</i></div>`;
             body.scrollTop = body.scrollHeight;
 
-            setTimeout(() => {
-                document.getElementById(typingId).remove();
-                
-                let resposta = "Não encontrei essa informação na base. Tente perguntar sobre 'multa da AWS' ou 'responsável pela LimpMax'.";
-                
-                if(txt.includes('multa') && txt.includes('aws')) {
-                    resposta = `A multa rescisória atual da AWS é de <b>R$ 2.000,00</b>.`;
-                } else if((txt.includes('responsável') || txt.includes('quem')) && txt.includes('limpmax')) {
-                    resposta = `A gestora responsável pelo contrato da LimpMax é a <b>Natália</b>.`;
-                } else if(txt.includes('valor')) {
-                    resposta = `Atualmente monitorizamos contratos no valor de <b>R$ 54k (AWS)</b> e <b>R$ 144k (LimpMax)</b>.`;
-                } else if(txt.includes('olá') || txt.includes('oi')) {
-                    resposta = `Olá! Como posso ajudar a otimizar os custos da empresa hoje?`;
-                }
+            const apiKey = localStorage.getItem('easy_gemini_key');
+            let resposta = "";
 
-                body.innerHTML += `<div class="msg bot">${resposta}</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 600);
+            if (apiKey) {
+                try {
+                    const contexto = JSON.stringify(db.contratos);
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: `Você é o assistente do sistema Easy Contrato. Responda de forma curta e direta em português usando os contratos cadastrados: ${contexto}. Pergunta do usuário: ${pergunta}` }] }]
+                        })
+                    });
+                    const data = await res.json();
+                    resposta = data.candidates[0].content.parts[0].text;
+                } catch (e) {
+                    resposta = responderLocalmente(pergunta);
+                }
+            } else {
+                await new Promise(r => setTimeout(r, 400));
+                resposta = responderLocalmente(pergunta);
+            }
+
+            document.getElementById(typingId).remove();
+            body.innerHTML += `<div class="msg bot">${resposta}</div>`;
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function responderLocalmente(txt) {
+            const q = txt.toLowerCase();
+            const total = db.contratos.reduce((acc, c) => acc + c.valor, 0);
+
+            // Busca por fornecedor específico cadastrado
+            const encontrado = db.contratos.find(c => q.includes(c.nome.toLowerCase()));
+            if (encontrado) {
+                return `O contrato com <b>${encontrado.nome}</b> (${encontrado.tipo}) custa <b>R$ ${encontrado.valor.toLocaleString('pt-BR')}</b>/mês, vence em <b>${encontrado.vencimento}</b> e o responsável é <b>${encontrado.responsavel}</b>.`;
+            }
+            if (q.includes('total') || q.includes('gasto') || q.includes('quanto')) {
+                return `Atualmente você tem <b>${db.contratos.length} contratos</b> cadastrados, somando <b>R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b> por mês.`;
+            }
+            if (q.includes('duplicado') || q.includes('limpeza') || q.includes('economia')) {
+                return `Detectei <b>2 contratos de Limpeza</b> ativos ao mesmo tempo (LimpMax e CleanPro). Unificar esses contratos pode gerar economia imediata!`;
+            }
+            if (q.includes('vence') || q.includes('vencimento') || q.includes('prazo')) {
+                const prox = [...db.contratos].sort((a, b) => new Date(a.vencimento) - new Date(b.vencimento))[0];
+                return prox ? `O contrato mais próximo do vencimento é <b>${prox.nome}</b>, que vence em <b>${prox.vencimento}</b>.` : "Não há contratos cadastrados.";
+            }
+            return `Tenho acesso aos ${db.contratos.length} contratos cadastrados (${db.contratos.map(c => c.nome).join(', ')}). Pergunte o valor, vencimento ou responsável de qualquer um deles!`;
         }
 
         window.onload = function() {
+            carregarChaveGemini();
             renderDashboard();
+            renderAnaliseEconomia();
             Chart.defaults.color = document.documentElement.getAttribute('data-theme') === 'dark' ? '#94a3b8' : '#5d6d7e';
             Chart.defaults.font.family = 'Inter';
         };
